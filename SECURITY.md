@@ -6,7 +6,7 @@ Security updates are provided for the latest published Aethmere CLI release.
 
 | Version | Supported |
 |---|---|
-| 0.5.x | Yes |
+| 0.7.x | Yes |
 | Earlier versions | Upgrade required |
 
 ## Report a vulnerability

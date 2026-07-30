@@ -25,10 +25,10 @@ service implementation, and internal development history are **not included**.
 
 ## Install Aethmere CLI
 
-Requirements: [Node.js 18 or newer](https://nodejs.org/).
+Requirements: Node.js 22 LTS (`>=22.13.0 <23`).
 
 ```bash
-npm install -g https://github.com/kzkz137806/aethmere-os/releases/download/v0.5.0/aethmere-cli-0.5.0.tgz
+npm install -g https://github.com/kzkz137806/aethmere-os/releases/download/v0.7.0/aethmere-cli-0.7.0.tgz
 aethmere --version
 aethmere connect
 aethmere doctor --profile package
@@ -37,7 +37,7 @@ aethmere doctor --profile package
 Expected version:
 
 ```text
-Aethmere CLI 0.5.0
+Aethmere CLI 0.7.0
 ```
 
 `aethmere connect` creates a user-level connection for supported AI clients. You
@@ -50,22 +50,22 @@ For a step-by-step Chinese guide, visit
 
 ## Verify the download
 
-SHA-256 for `aethmere-cli-0.5.0.tgz`:
+SHA-256 for `aethmere-cli-0.7.0.tgz`:
 
 ```text
-d8cb5ba07ada5f4ec71ba49356088c6fee1064e55ecb96768fd625e2176290d0
+964903d1f5787e6fb58dfe37a762d29c966971abd20e06a2b22cdcfe9954a2a6
 ```
 
 PowerShell:
 
 ```powershell
-Get-FileHash .\aethmere-cli-0.5.0.tgz -Algorithm SHA256
+Get-FileHash .\aethmere-cli-0.7.0.tgz -Algorithm SHA256
 ```
 
 macOS/Linux:
 
 ```bash
-shasum -a 256 aethmere-cli-0.5.0.tgz
+shasum -a 256 aethmere-cli-0.7.0.tgz
 ```
 
 The CLI also verifies signed update metadata, package size, and SHA-256 before an
