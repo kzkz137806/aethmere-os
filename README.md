@@ -48,37 +48,6 @@ desktop upload remains off until the user enables it.
 For a step-by-step Chinese guide, visit
 [aethmere.com](https://aethmere.com/#install).
 
-## Hallucination governance
-
-Aethmere treats hallucination risk as a lifecycle governance problem. The goal
-is not merely to produce a plausible answer; it is to release an answer whose
-claims, evidence, time context, and memory effects remain accountable.
-
-| Failure surface | Aethmere's governance target |
-|---|---|
-| Unsupported claims | Require usable evidence or abstain instead of filling gaps |
-| Citation mismatch | Keep claims attached to inspectable supporting sources |
-| Stale or conflicting facts | Preserve replacement and time context instead of silently reusing an old fact |
-| Overstated or incomplete answers | Make missing support visible; do not let confidence hide an evidence gap |
-| Memory contamination | Gate durable memory changes by provenance, review, and user control |
-| Unsafe external release | Apply a final disclosure and evidence boundary before content leaves the system |
-
-### Evidence standard
-
-Aethmere reports deterministic guard verification separately from end-to-end
-model outcomes. Every published result must identify its dataset, model, budget,
-judge, scope, and known limitations. A single aggregate score does not replace
-failure analysis.
-
-The evaluation scorecard covers answer accuracy, unsupported assertions,
-omissions, false-memory resistance, update hallucination, temporal-conflict
-handling, abstention calibration, cost, and latency. Cross-system claims require
-the same frozen inputs and constraints for every system under test.
-
-Current evidence supports scoped governance controls. A reproducible
-cross-system end-to-end evaluation is in progress; results will be published
-with the protocol and failure analysis when they satisfy the release gate.
-
 ## Verify the download
 
 SHA-256 for `aethmere-cli-0.7.0.tgz`:

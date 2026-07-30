@@ -1,12 +1,5 @@
 # Changelog
 
-## Unreleased
-
-- Added the public Aethmere hallucination-governance scope and its evidence
-  boundary.
-- Published the reproducibility and failure-analysis requirements for
-  cross-system evaluation.
-
 ## 0.7.0 — 2026-07-28
 
 - Added status overview, session handoff, task convergence, and multi-session
