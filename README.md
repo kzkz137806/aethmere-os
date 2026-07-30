@@ -48,41 +48,6 @@ desktop upload remains off until the user enables it.
 For a step-by-step Chinese guide, visit
 [aethmere.com](https://aethmere.com/#install).
 
-## Hallucination governance: a broader target than search accuracy
-
-Search quality matters, but a search-answer score is not a hallucination cure
-rate. Aethmere is designed to govern the full answer-and-memory lifecycle:
-
-| Failure surface | Aethmere's governance target |
-|---|---|
-| Unsupported claims | Require usable evidence or abstain instead of filling gaps |
-| Citation mismatch | Keep claims attached to inspectable supporting sources |
-| Stale or conflicting facts | Preserve replacement and time context instead of silently reusing an old fact |
-| Overstated or incomplete answers | Make missing support visible; do not let confidence hide an evidence gap |
-| Memory contamination | Gate durable memory changes by provenance, review, and user control |
-| Unsafe external release | Apply a final disclosure and evidence boundary before content leaves the system |
-
-For comparison, AnySearch currently publishes **76.4% answer correctness** on
-300 questions across Frames, FreshQA, and WebWalkerQA, using the same GLM-5.1
-model while varying the search API. That is a useful search benchmark, but it is
-not presented as a hallucination cure rate and does not separately report the
-memory-update, false-memory, citation, omission, and calibrated-abstention
-dimensions above. See the
-[AnySearch accuracy benchmark](https://www.anysearch.com/home).
-
-Our claim today is deliberately precise: **Aethmere targets a broader
-hallucination-risk surface than a search-only accuracy benchmark.** Our current
-tests support scoped governance controls; they do not yet justify a universal
-“hallucination cured” percentage or an all-vendor #1 claim.
-
-We are prepared to earn that stronger claim through a locked comparison using
-the same model, questions, search budget, latency budget, and independent judge.
-The scorecard must publish answer accuracy, unsupported-assertion rate, omission
-rate, false-memory resistance, update hallucination, temporal-conflict accuracy,
-abstention precision/recall, cost, and latency. Until that comparison is run,
-we will not rename a narrower metric or a private test result as “overall
-leadership.”
-
 ## Verify the download
 
 SHA-256 for `aethmere-cli-0.7.0.tgz`:
