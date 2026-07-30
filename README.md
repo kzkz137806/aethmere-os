@@ -48,10 +48,11 @@ desktop upload remains off until the user enables it.
 For a step-by-step Chinese guide, visit
 [aethmere.com](https://aethmere.com/#install).
 
-## Hallucination governance: a broader target than search accuracy
+## Hallucination governance
 
-Search quality matters, but a search-answer score is not a hallucination cure
-rate. Aethmere is designed to govern the full answer-and-memory lifecycle:
+Aethmere treats hallucination risk as a lifecycle governance problem. The goal
+is not merely to produce a plausible answer; it is to release an answer whose
+claims, evidence, time context, and memory effects remain accountable.
 
 | Failure surface | Aethmere's governance target |
 |---|---|
@@ -62,26 +63,21 @@ rate. Aethmere is designed to govern the full answer-and-memory lifecycle:
 | Memory contamination | Gate durable memory changes by provenance, review, and user control |
 | Unsafe external release | Apply a final disclosure and evidence boundary before content leaves the system |
 
-For comparison, AnySearch currently publishes **76.4% answer correctness** on
-300 questions across Frames, FreshQA, and WebWalkerQA, using the same GLM-5.1
-model while varying the search API. That is a useful search benchmark, but it is
-not presented as a hallucination cure rate and does not separately report the
-memory-update, false-memory, citation, omission, and calibrated-abstention
-dimensions above. See the
-[AnySearch accuracy benchmark](https://www.anysearch.com/home).
+### Evidence standard
 
-Our claim today is deliberately precise: **Aethmere targets a broader
-hallucination-risk surface than a search-only accuracy benchmark.** Our current
-tests support scoped governance controls; they do not yet justify a universal
-“hallucination cured” percentage or an all-vendor #1 claim.
+Aethmere reports deterministic guard verification separately from end-to-end
+model outcomes. Every published result must identify its dataset, model, budget,
+judge, scope, and known limitations. A single aggregate score does not replace
+failure analysis.
 
-We are prepared to earn that stronger claim through a locked comparison using
-the same model, questions, search budget, latency budget, and independent judge.
-The scorecard must publish answer accuracy, unsupported-assertion rate, omission
-rate, false-memory resistance, update hallucination, temporal-conflict accuracy,
-abstention precision/recall, cost, and latency. Until that comparison is run,
-we will not rename a narrower metric or a private test result as “overall
-leadership.”
+The evaluation scorecard covers answer accuracy, unsupported assertions,
+omissions, false-memory resistance, update hallucination, temporal-conflict
+handling, abstention calibration, cost, and latency. Cross-system claims require
+the same frozen inputs and constraints for every system under test.
+
+Current evidence supports scoped governance controls. A reproducible
+cross-system end-to-end evaluation is in progress; results will be published
+with the protocol and failure analysis when they satisfy the release gate.
 
 ## Verify the download
 

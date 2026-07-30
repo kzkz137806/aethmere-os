@@ -4,8 +4,8 @@
 
 - Added the public Aethmere hallucination-governance scope and its evidence
   boundary.
-- Published the conditions for a fair, same-model cross-vendor comparison
-  instead of treating search answer accuracy as a hallucination cure rate.
+- Published the reproducibility and failure-analysis requirements for
+  cross-system evaluation.
 
 ## 0.7.0 — 2026-07-28
 
