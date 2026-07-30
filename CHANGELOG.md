@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added the public Aethmere hallucination-governance scope and its evidence
+  boundary.
+- Published the conditions for a fair, same-model cross-vendor comparison
+  instead of treating search answer accuracy as a hallucination cure rate.
+
 ## 0.7.0 — 2026-07-28
 
 - Added status overview, session handoff, task convergence, and multi-session
