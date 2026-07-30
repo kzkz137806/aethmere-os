@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Aethmere website
+    url: https://aethmere.com
+    about: Product information, installation guide, and official downloads.
+  - name: Security report
+    url: https://github.com/kzkz137806/aethmere-os/security/advisories/new
+    about: Privately report a security vulnerability.
