@@ -84,6 +84,29 @@ The contents of this repository and its release assets are proprietary unless a
 file explicitly states otherwise. No open-source license is granted. See
 [NOTICE.md](NOTICE.md).
 
+## Hallucination-risk governance
+
+Aethmere treats hallucination risk as a context-lifecycle problem, not only as
+a retrieval problem. Its governance layer helps supported AI clients determine
+whether context is source-supported, stale, superseded, conflicting, or too
+weakly evidenced to reuse safely in an answer.
+
+The governance model includes:
+
+- source-linked context with visible provenance;
+- explicit updates, retractions, and temporal-conflict handling;
+- checks for false-memory carryover and omitted constraints;
+- calibrated abstention when available support is insufficient or conflicting.
+
+These controls are designed to reduce hallucination risk; they do not make any
+model infallible. Aethmere publishes quantitative performance claims only when
+each result is tied to a named protocol, fixed evaluation set, model, resource
+budgets, judge, evaluation date, and reproducible evidence.
+
+The governance engine remains part of Aethmere's proprietary core. Users receive
+the signed client and verifiable release artifacts through this repository while
+the core source code and private evaluation material remain unpublished.
+
 ## Support
 
 Use [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) for public
