@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added a precise public description of Aethmere's hallucination-risk governance
+  model and the evidence standard required for future quantitative claims.
+
 ## 0.7.0 — 2026-07-28
 
 - Added status overview, session handoff, task convergence, and multi-session
