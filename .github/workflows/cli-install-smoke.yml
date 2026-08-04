@@ -1,0 +1,47 @@
+name: CLI install smoke
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CLI_URL: https://github.com/kzkz137806/aethmere-os/releases/download/v0.7.0/aethmere-cli-0.7.0.tgz
+      CLI_SHA256: 964903d1f5787e6fb58dfe37a762d29c966971abd20e06a2b22cdcfe9954a2a6
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Download and verify SHA-256
+        shell: bash
+        run: |
+          curl -sL -o aethmere-cli.tgz "$CLI_URL"
+          node -e "const c=require('crypto'),f=require('fs');const h=c.createHash('sha256').update(f.readFileSync('aethmere-cli.tgz')).digest('hex');if(h!==process.env.CLI_SHA256){console.error('sha256 mismatch',h);process.exit(1)}console.log('sha256 ok',h)"
+
+      - name: Install globally
+        shell: bash
+        run: npm install -g ./aethmere-cli.tgz
+
+      - name: Version
+        shell: bash
+        run: |
+          aethmere --version
+          aethmere --version | grep -q "0.7.0"
+
+      - name: Doctor (package profile)
+        shell: bash
+        run: aethmere doctor --profile package
