@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > Kho phân phối công khai — **đây không phải là kho mã nguồn mở**.
 

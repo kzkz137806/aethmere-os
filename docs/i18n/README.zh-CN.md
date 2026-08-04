@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 简体中文版已升级为仓库首页：请见 [README.md](../../README.md)。
 

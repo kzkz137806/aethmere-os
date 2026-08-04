@@ -1,10 +1,10 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > 公开分发仓库 — **本仓库不是开源仓库**。
 
 **简体中文** | [English](docs/i18n/README.en.md) | [日本語](docs/i18n/README.ja.md) | [한국어](docs/i18n/README.ko.md) | [ไทย](docs/i18n/README.th.md) | [Tiếng Việt](docs/i18n/README.vi.md) | [Bahasa Indonesia](docs/i18n/README.id.md) | [Bahasa Melayu](docs/i18n/README.ms.md) | [Filipino](docs/i18n/README.fil.md) | [Español](docs/i18n/README.es.md) | [Português](docs/i18n/README.pt.md) | [Français](docs/i18n/README.fr.md) | [Deutsch](docs/i18n/README.de.md) | [Русский](docs/i18n/README.ru.md) | [العربية](docs/i18n/README.ar.md)
 
-Aethmere（识海）是面向 AI 辅助工作的记忆层，把「**不编造**」当作工程要求而不是口号。
+Aethmere（识宙）是面向 AI 辅助工作的记忆层，把「**不编造**」当作工程要求而不是口号。
 它为受支持的 AI 客户端提供持久、用户可控、边界可见的记忆：你明确要求记住的，精确作答；
 从未记录或已撤回的，拒绝作答而不是猜测；普通问题原样交给你的模型，不被吞掉。
 

@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > Dépôt de distribution publique — **ce dépôt n'est pas un dépôt open source**.
 

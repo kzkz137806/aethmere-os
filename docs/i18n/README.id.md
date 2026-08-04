@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > Repositori distribusi publik — **ini bukan repositori sumber terbuka**.
 

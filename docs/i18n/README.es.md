@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > Repositorio de distribución pública — **este no es un repositorio de código abierto**.
 

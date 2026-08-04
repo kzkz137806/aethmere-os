@@ -1,4 +1,4 @@
-# Aethmere · 识海
+# Aethmere · 识宙
 
 > Pampublikong repositoryo ng distribusyon — **hindi ito open-source na repositoryo**.
 
