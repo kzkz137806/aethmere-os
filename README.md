@@ -73,9 +73,9 @@ model limitations apply.
 
 **Personal cloud memory**
 
-- Account-isolated cloud space (about 100M estimated tokens, 200 conversations)
-  with cross-device restore; per-device upload switches; answers inject only
-  bounded, relevant history — never the whole archive.
+- Account-isolated cloud space (roughly 100M estimated tokens across up to 200
+  conversations) with cross-device restore; per-device upload switches; answers
+  inject only bounded, relevant history — never the whole archive.
 - Provider API keys stored as AES-GCM ciphertext bound to your account; ordinary
   APIs only ever see the last four characters.
 
@@ -99,7 +99,7 @@ model limitations apply.
 **Everywhere you work**
 
 - Installable mobile/desktop web app (PWA) with streaming answers, code blocks,
-  tables, and message copy.
+  tables, and one-tap message copying.
 - Desktop CLI (`aethmere-cli`) with one-time device linking: `aethmere sync`
   mirrors your cloud memory locally; Claude Code, Codex, and other MCP clients can
   use it through `cloud_memory_recall`. Read-only by default; upload requires an
@@ -127,9 +127,9 @@ Aethmere CLI 0.7.0
 ```
 
 `aethmere connect` creates a user-level connection for supported AI clients. You
-do not need to reconnect whenever you change project folders. Local use does not
+do not need to reconnect when you switch project folders. Local use does not
 require a web invitation. Cloud login and synchronization are optional, and
-desktop upload remains off until the user enables it.
+desktop upload remains off until you turn it on.
 
 For a step-by-step Chinese guide, visit
 [aethmere.com](https://aethmere.com/#install).

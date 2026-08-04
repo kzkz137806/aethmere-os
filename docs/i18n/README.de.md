@@ -7,7 +7,7 @@
 Aethmere ist eine Gedächtnisschicht für KI-gestütztes Arbeiten, die **das Nicht-Erfinden**
 als technische Anforderung behandelt, nicht als Werbeversprechen. Sie gibt unterstützten
 KI-Clients ein dauerhaftes, nutzerkontrolliertes Gedächtnis mit sichtbaren Antwortgrenzen:
-Was Sie ausdrücklich zu merken aufgegeben haben, wird exakt beantwortet; was nie erfasst
+Was Sie ihm ausdrücklich zu merken aufgetragen haben, wird exakt beantwortet; was nie erfasst
 oder wieder zurückgezogen wurde, wird verweigert statt geraten; gewöhnliche Fragen gehen
 unverändert an Ihr Modell durch.
 
@@ -18,7 +18,7 @@ unverändert an Ihr Modell durch.
 
 ## Warum Aethmere
 
-Die meisten KI-Gedächtnissysteme scheitern in eine von zwei Richtungen: Sie halluzinieren
+Die meisten KI-Gedächtnissysteme scheitern auf eine von zwei Weisen: Sie halluzinieren
 Erinnerungen, die man ihnen nie gegeben hat, oder sie schlucken gewöhnliche Fragen mit
 unnötigen Verweigerungen. Die kontrollierte Gedächtnisspur von Aethmere ist so gebaut,
 dass sich keine der beiden Richtungen verstecken kann:
@@ -26,8 +26,8 @@ dass sich keine der beiden Richtungen verstecken kann:
 - **Beantwortbare Fragen müssen exakt beantwortet werden.** Die Verweigerung einer
   beantwortbaren Frage zählt in unserer Evaluation als Fehler — Korrektheit lässt sich
   niemals durch Verweigerungen erkaufen.
-- **Unbeantwortbare Fragen müssen verweigert werden.** Wenn ein Wert nie erfasst,
-  zurückgezogen oder mehrdeutig ist, wäre die Herausgabe *irgendeines* Wertes eine
+- **Unbeantwortbare Fragen müssen verweigert werden.** Wenn ein Wert nie erfasst wurde,
+  zurückgezogen wurde oder mehrdeutig ist, wäre die Herausgabe *irgendeines* Wertes eine
   Erfindung. Die kontrollierte Spur verweigert deterministisch.
 - **Gewöhnliche Fragen müssen durchgelassen werden.** Eine Frage, die lediglich
   Gedächtnis-Stichwörter enthält, wird an Ihr Modell geleitet und nicht geschluckt.
@@ -38,7 +38,7 @@ dass sich keine der beiden Richtungen verstecken kann:
 ## Gemessene Ergebnisse (versiegelte, begrenzte Evaluation)
 
 In einer versiegelten internen Evaluation des kontrollierten Gedächtnisvertrags — der
-Kandidat vor der Ziehung eines vorab festgelegten Zufallssamens per Hash eingefroren,
+Kandidat per Hash eingefroren, bevor ein vorab festgelegter Zufallsstartwert (Seed) gezogen wurde,
 die Fälle deterministisch erzeugt, jede Antwort von einem zum Erzeugungszeitpunkt
 fixierten maschinellen Orakel bewertet, sämtliche Belege aufbewahrt:
 
@@ -82,7 +82,8 @@ unverändert.
 
 **Persönliches Cloud-Gedächtnis**
 
-- Kontoisolierter Cloud-Speicher (etwa 100M geschätzte Token, 200 Konversationen)
+- Kontoisolierter Cloud-Speicher (etwa 100M geschätzte Token, verteilt auf bis zu
+  200 Konversationen)
   mit geräteübergreifender Wiederherstellung; Upload-Schalter je Gerät; Antworten
   binden nur begrenzte, relevante Historie ein — niemals das gesamte Archiv.
 - Anbieter-API-Schlüssel werden als AES-GCM-Chiffrat kontogebunden gespeichert;
@@ -109,8 +110,8 @@ unverändert.
 
 **Überall, wo Sie arbeiten**
 
-- Installierbare Web-App für Mobil und Desktop (PWA) mit Streaming-Antworten,
-  Codeblöcken, Tabellen und Nachrichtenkopie.
+- Installierbare Web-App für Mobilgeräte und Desktop (PWA) mit Streaming-Antworten,
+  Codeblöcken, Tabellen und dem Kopieren von Nachrichten mit einem Fingertipp.
 - Desktop-CLI (`aethmere-cli`) mit einmaliger Gerätekopplung: `aethmere sync`
   spiegelt Ihr Cloud-Gedächtnis lokal; Claude Code, Codex und andere MCP-Clients können
   es über `cloud_memory_recall` nutzen. Standardmäßig schreibgeschützt; der Upload

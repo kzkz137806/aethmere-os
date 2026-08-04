@@ -30,11 +30,11 @@ tidak dapat bersembunyi:
 - **Soalan yang tidak boleh dijawab mesti ditolak.** Jika sesuatu nilai tidak pernah
   direkodkan, telah ditarik balik, atau kabur maknanya, melepaskan *sebarang* nilai
   adalah rekaan. Lorong bertadbir menolak, secara deterministik.
-- **Soalan biasa mesti dilepaskan.** Soalan yang sekadar menyebut perkataan berkaitan
+- **Soalan biasa mesti disalurkan terus.** Soalan yang sekadar menyebut perkataan berkaitan
   ingatan akan dihalakan kepada model anda, bukan ditelan.
 - **Penulisan disahkan terlebih dahulu.** Mesej yang kelihatan seperti arahan ingatan
-  hanya ditulis selepas pengesahan jelas daripada anda; jika anda menolak, ia kekal
-  sebagai sejarah sembang biasa.
+  hanya ditulis selepas pengesahan jelas daripada anda; jika anda menolak, mesej itu
+  kekal sebagai sejarah sembang biasa.
 
 ## Keputusan terukur (penilaian bermeterai, berbatas)
 
@@ -46,7 +46,7 @@ pada masa penjanaan, dan semua resit disimpan:
 | Titik ukur | Keputusan | Batas bawah 95% |
 |---|---|---|
 | Ketepatan berbatas | **2,400 / 2,400 kelompok betul** (8 keluarga tugas × 300, sifar toleransi bagi setiap keluarga) | ≥ 99.87% |
-| Penawaran halusinasi berbatas | **1,800 / 1,800 kegagalan garis dasar dipulihkan, 0 / 600 regresi** berbanding model 7B tempatan yang diberi perbualan yang sama tanpa tadbir urus | ≥ 99.83% |
+| Pemulihan halusinasi berbatas | **1,800 / 1,800 kegagalan garis dasar dipulihkan, 0 / 600 regresi** berbanding model 7B tempatan yang diberi perbualan yang sama tanpa tadbir urus | ≥ 99.83% |
 
 Lapan keluarga tugas itu merangkumi ingatan langsung, set dan pengiraan, ingatan
 berskop masa, kemas kini dan percanggahan, cantuman berbilang lompatan, tekanan
@@ -73,18 +73,18 @@ model tetap terpakai.
   kemas kini, tarik balik, cari, dan nota kunci–nilai terbuka; set berbilang nilai;
   ingatan berskop masa.
 - Silsilah ingatan bertandatangan: setiap fakta yang diterima membawa rantaian
-  boleh sahih sehingga ke mesej asal; nilai yang ditarik balik tidak akan muncul
+  yang boleh disahkan sehingga ke mesej asal; nilai yang ditarik balik tidak akan muncul
   semula melalui mana-mana pertanyaan.
 - Sahkan-sebelum-tulis: arahan ingatan baharu memerlukan pengesahan jelas daripada
   anda di dalam produk sebelum apa-apa disimpan.
-- Tangkapan bentuk bebas dengan pengesahan tempatan: ayat semula jadi boleh
-  mencalonkan calon ingatan melalui model tempatan dan disahkan semula secara
+- Tangkapan bentuk bebas dengan pengesahan tempatan: ayat biasa boleh
+  mencadangkan calon ingatan melalui model tempatan dan disahkan semula secara
   deterministik sebelum diterima — dengan sifar penghantaran keluar teks asal anda.
 
 **Ingatan awan peribadi**
 
-- Ruang awan terasing mengikut akaun (kira-kira 100M token dianggarkan, 200
-  perbualan) dengan pemulihan merentas peranti; suis muat naik bagi setiap peranti;
+- Ruang awan terasing mengikut akaun (kira-kira 100M token dianggarkan, merentas
+  sehingga 200 perbualan) dengan pemulihan merentas peranti; suis muat naik bagi setiap peranti;
   jawapan hanya menyuntik sejarah berkaitan yang berbatas — bukan keseluruhan arkib.
 - Kunci API pembekal disimpan sebagai teks sifer AES-GCM yang terikat pada akaun
   anda; API biasa hanya melihat empat aksara terakhir.
@@ -101,23 +101,23 @@ model tetap terpakai.
 
 - Carian web masa nyata berbilang enjin dengan tetingkap kebaharuan (hari / beberapa
   hari / minggu / bulan), perancangan pertanyaan automatik dan cubaan semula, serta
-  had hasil yang ditala untuk menyokong jawapan.
+  had hasil yang ditala untuk pengasasan jawapan pada sumber.
 - Capaian merentas bahasa: soalan dalam bahasa Cina dipetakan secara automatik kepada
   topik carian antarabangsa yang fokus (pasaran, komoditi, mata wang dan lain-lain).
-- Petikan pantas niaga hadapan China secara langsung bagi simbol yang disokong,
+- Petikan langsung pasaran niaga hadapan China bagi simbol yang disokong,
   diambil pada masa jawapan diberi dan dirujuk sebagai sumber data dalam balasan.
 
 **Di mana sahaja anda bekerja**
 
 - Aplikasi web mudah alih/desktop (PWA) yang boleh dipasang, dengan jawapan
-  penstriman, blok kod, jadual, dan salinan mesej.
+  penstriman, blok kod, jadual, dan penyalinan mesej dengan satu ketikan.
 - CLI desktop (`aethmere-cli`) dengan pemautan peranti sekali sahaja: `aethmere sync`
   mencerminkan ingatan awan anda ke komputer tempatan; Claude Code, Codex, dan klien
   MCP yang lain boleh menggunakannya melalui `cloud_memory_recall`. Baca sahaja secara
   lalai; muat naik memerlukan pilihan-masuk berganda yang jelas.
 - Saluran sembang: ikat Telegram (DM bot) atau Discord (`/aethmere ask`, balasan
-  sementara) kepada akaun anda dengan kod sekali guna; menyahikat memutuskan akses
-  serta-merta.
+  sementara) kepada akaun anda dengan kod sekali guna; pembatalan ikatan memutuskan
+  akses serta-merta.
 - Hab kemahiran di pihak pelayan: kad keupayaan terpilih dihalakan secara automatik
   selepas log masuk — tiada pendawaian kemahiran secara manual.
 

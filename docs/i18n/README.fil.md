@@ -5,7 +5,7 @@
 [English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | **Filipino** | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Ang Aethmere ay isang memory layer para sa gawaing tinutulungan ng AI, na itinuturing
-ang **hindi pag-imbento** bilang isang kinakailangang panteknikal, hindi isang islogan.
+ang **hindi pag-imbento** bilang isang kinakailangan sa inhinyeriya, hindi isang islogan.
 Nagbibigay ito sa mga suportadong AI client ng matibay na memorya na kontrolado ng
 gumagamit at may nakikitang hangganan ng sagot: ang hayagan mong ipinatandang bagay ay
 sinasagot nang eksakto; ang hindi kailanman naitala, o binawi na, ay tinatanggihan sa
@@ -32,14 +32,14 @@ ay ginawa upang walang mapagtaguan ang alinman sa dalawang direksyong ito:
 - **Ang mga ordinaryong tanong ay dapat padaanin.** Ang tanong na basta nabanggit lang
   ang mga salitang may kinalaman sa memorya ay iruruta sa modelo mo, hindi lulunukin.
 - **Kinukumpirma ang pagsusulat.** Ang mensaheng mukhang utos sa memorya ay isinusulat
-  lamang matapos ang hayagan mong kumpirmasyon; kapag tumanggi ka, mananatili itong
-  ordinaryong kasaysayan ng chat.
+  lamang matapos ang hayagan mong kumpirmasyon; kapag tumanggi ka, mananatili ang mensahe
+  bilang ordinaryong kasaysayan ng chat.
 
 ## Nasukat na resulta (selyado at may-hangganang ebalwasyon)
 
 Sa isang selyadong panloob na ebalwasyon ng pinamamahalaang kontrata ng memorya — ang
 kandidato ay ni-freeze sa pamamagitan ng hash bago hinugot ang naipangakong random seed,
-determinadong nabuo ang mga kaso, bawat sagot ay minarkahan ng isang machine oracle na
+determinadong nabuo ang mga kaso, bawat sagot ay iniskor ng isang machine oracle na
 nakatakda na noong panahon ng pagbuo, at ang lahat ng resibo ay itinago:
 
 | Endpoint | Resulta | 95% lower bound |
@@ -47,20 +47,20 @@ nakatakda na noong panahon ng pagbuo, at ang lahat ng resibo ay itinago:
 | May-hangganang katumpakan | **2,400 / 2,400 na kumpol ang tama** (8 pamilya ng gawain × 300, zero tolerance kada pamilya) | ≥ 99.87% |
 | May-hangganang lunas sa halusinasyon | **1,800 / 1,800 na pagkakamali ng baseline ang naayos, 0 / 600 na regresyon** laban sa isang lokal na 7B na modelo na binigyan ng parehong mga usapan nang walang pamamahala | ≥ 99.83% |
 
-Sinasaklaw ng walong pamilya ng gawain ang tuwirang pagbawi, mga set at pagbibilang,
-pagbawi ayon sa panahon, mga pag-update at salungatan, multi-hop na pag-uugnay, presyur
+Sinasaklaw ng walong pamilya ng gawain ang tuwirang paggunita, mga set at pagbibilang,
+paggunita ayon sa panahon, mga pag-update at salungatan, multi-hop na pag-uugnay, presyur
 ng maling alaala (kung saan anumang inilabas na halaga ay magiging imbento), bukas na
 key–value na tala, at presyur sa hangganan (mga pangungusap na salaysay na hindi dapat
 maisama, at mga ordinaryong tanong na hindi dapat lunukin). Sa parehong mga usapan, ang
 hindi pinamamahalaang lokal na 7B na baseline ay nag-imbento o nagkamali sa 75% ng mga
 kumpol; naayos ng pinamamahalaang lane ang lahat ng ito nang walang anumang regresyon
-sa mga kumpol na natamaan ng baseline.
+sa mga kumpol na tama nang nasagot ng baseline.
 
-**Saklaw, sabihin nang tuwiran:** ito ay mga may-hangganang resulta sa loob ng
+**Saklaw, malinaw na sinasabi:** ito ay mga may-hangganang resulta sa loob ng
 pinamamahalaang kontrata ng memorya ng Aethmere — ang hayagang gramatika ng utos nito at
 ang mga pamilya ng query — na sinukat mula dulo hanggang dulo sa tunay na mga serbisyo ng
-paglulunok at paglalabas. Hindi ito isang open-world na pahayag, hindi ito pahayag tungkol
-sa katumpakan ng buong produkto, at hindi ito pahayag tungkol sa pangkalahatang mga sagot
+pag-ingest at paglalabas ng halaga ng memorya. Hindi ito isang open-world na pahayag, hindi
+ito pahayag tungkol sa katumpakan ng buong produkto, at hindi ito pahayag tungkol sa pangkalahatang mga sagot
 ng modelo mo. Sa labas ng pinamamahalaang kontrata, sumasagot ang modelo mo gaya ng dati
 at umiiral ang karaniwang mga limitasyon ng modelo.
 
@@ -70,7 +70,7 @@ at umiiral ang karaniwang mga limitasyon ng modelo.
 
 - Hayagang mga utos sa memorya na may eksakto at naa-audit na semantika: pagtatala,
   pag-update, pagbawi, paghanap, at bukas na key–value na tala; multi-value na set;
-  pagbawi ayon sa panahon.
+  paggunita ayon sa panahon.
 - Nilagdaang lineage ng memorya: bawat tinanggap na katotohanan ay may dalang mabe-verify
   na kadena pabalik sa orihinal na mensahe; ang mga binawing halaga ay hindi na muling
   lilitaw sa anumang query.
@@ -83,8 +83,9 @@ at umiiral ang karaniwang mga limitasyon ng modelo.
 
 **Personal na cloud memory**
 
-- Espasyo sa cloud na hiwalay ayon sa account (humigit-kumulang 100M na tinatayang token,
-  200 na usapan) na may pagbawi sa iba't ibang device; hiwalay na upload switch kada device;
+- Espasyo sa cloud na hiwalay ayon sa account (humigit-kumulang 100M na tinatayang token na
+  nakakalat sa hanggang 200 na usapan) na may pagpapanumbalik sa iba't ibang device; hiwalay
+  na switch para sa pag-on/off ng upload kada device;
   ang mga sagot ay naglalagay lamang ng may-hangganan at kaugnay na kasaysayan — hindi
   kailanman ang buong archive.
 - Ang mga API key ng provider ay iniimbak bilang AES-GCM ciphertext na nakatali sa account
@@ -112,7 +113,7 @@ at umiiral ang karaniwang mga limitasyon ng modelo.
 **Saanman ka magtrabaho**
 
 - Nai-install na mobile/desktop na web app (PWA) na may streaming na sagot, code block,
-  talahanayan, at pagkopya ng mensahe.
+  talahanayan, at isang-tap na pagkopya ng mensahe.
 - Desktop CLI (`aethmere-cli`) na may isang beses na pag-uugnay ng device: ang `aethmere sync`
   ay sinasalamin ang cloud memory mo nang lokal; magagamit ito ng Claude Code, Codex, at iba
   pang MCP client sa pamamagitan ng `cloud_memory_recall`. Read-only bilang default; ang
@@ -170,7 +171,7 @@ shasum -a 256 aethmere-cli-0.7.0.tgz
 ```
 
 Bago mag-install ng update, sinusuri rin ng CLI ang nilagdaang metadata ng update, ang laki
-ng package, at ang SHA-256. Hindi kailanman nag-i-install ng update nang walang kumpirmasyon.
+ng package, at ang SHA-256. Hindi kailanman naii-install ang anumang update nang walang kumpirmasyon.
 
 ## Ano ang nasa repositoryong ito
 

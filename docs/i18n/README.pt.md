@@ -8,7 +8,7 @@ Aethmere é uma camada de memória para trabalho assistido por IA que trata **n�
 inventar** como um requisito de engenharia, não como um slogan. Ela oferece aos
 clientes de IA compatíveis uma memória durável, controlada pelo usuário e com
 limites visíveis: o que você pediu explicitamente para lembrar é respondido com
-exatidão; o que nunca foi registrado, ou foi retirado, é recusado em vez de
+exatidão; o que nunca foi registrado, ou foi revogado, é recusado em vez de
 adivinhado; perguntas comuns seguem intactas para o seu modelo.
 
 [Site](https://aethmere.com) ·
@@ -27,7 +27,7 @@ nenhuma das duas direções possa se esconder:
   pergunta respondível conta como falha na nossa avaliação — a precisão nunca pode
   ser comprada com recusas.
 - **Perguntas não respondíveis devem ser recusadas.** Se um valor nunca foi
-  registrado, foi retratado ou é ambíguo, liberar *qualquer* valor seria uma
+  registrado, foi revogado ou é ambíguo, liberar *qualquer* valor seria uma
   fabricação. A pista governada recusa, de forma determinística.
 - **Perguntas comuns devem passar adiante.** Uma pergunta que apenas menciona
   palavras ligadas a memória é encaminhada ao seu modelo, não engolida.
@@ -39,7 +39,7 @@ nenhuma das duas direções possa se esconder:
 
 Em uma avaliação interna selada do contrato de memória governada — candidato
 congelado por hash antes do sorteio de uma semente aleatória previamente
-comprometida, casos gerados de forma determinística, cada resposta avaliada por um
+registrada (pré-comprometida em commit), casos gerados de forma determinística, cada resposta avaliada por um
 oráculo de máquina fixado no momento da geração, todos os comprovantes preservados:
 
 | Endpoint | Resultado | Limite inferior de 95% |
@@ -69,10 +69,10 @@ limitações usuais de modelos continuam valendo.
 **Memória governada (o núcleo)**
 
 - Comandos de memória explícitos com semântica exata e auditável: registrar,
-  atualizar, retratar, localizar e notas abertas de chave–valor; conjuntos
+  atualizar, revogar, localizar e notas abertas de chave–valor; conjuntos
   multivalorados; recuperação delimitada no tempo.
 - Linhagem de memória assinada: todo fato aceito carrega uma cadeia verificável a
-  partir da mensagem original; valores retratados nunca reaparecem em nenhuma
+  partir da mensagem original; valores revogados nunca reaparecem em nenhuma
   consulta.
 - Confirmar antes de gravar: novos comandos de memória exigem sua confirmação
   explícita no produto antes que qualquer coisa seja armazenada.
@@ -82,9 +82,10 @@ limitações usuais de modelos continuam valendo.
 
 **Memória pessoal na nuvem**
 
-- Espaço na nuvem isolado por conta (cerca de 100M tokens estimados, 200 conversas)
-  com restauração entre dispositivos; chaves de upload por dispositivo; as respostas
-  injetam apenas histórico limitado e relevante — nunca o arquivo inteiro.
+- Espaço na nuvem isolado por conta (cerca de 100M tokens estimados distribuídos por
+  até 200 conversas) com restauração entre dispositivos; controles (liga/desliga) de
+  upload por dispositivo; as respostas injetam apenas histórico limitado e relevante
+  — nunca o arquivo inteiro.
 - Chaves de API de provedores armazenadas como texto cifrado AES-GCM vinculado à sua
   conta; as APIs comuns só enxergam os quatro últimos caracteres.
 
@@ -110,7 +111,7 @@ limitações usuais de modelos continuam valendo.
 **Em todos os lugares onde você trabalha**
 
 - Aplicativo web móvel/desktop instalável (PWA) com respostas em streaming, blocos
-  de código, tabelas e cópia de mensagens.
+  de código, tabelas e cópia de mensagens com um toque.
 - CLI de desktop (`aethmere-cli`) com vinculação única de dispositivo: `aethmere sync`
   espelha sua memória na nuvem localmente; Claude Code, Codex e outros clientes MCP
   podem usá-la via `cloud_memory_recall`. Somente leitura por padrão; o upload exige

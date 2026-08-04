@@ -9,7 +9,7 @@ Aethmere adalah lapisan memori untuk pekerjaan berbantuan AI yang memperlakukan
 memberikan klien AI yang didukung sebuah memori yang tahan lama, dikendalikan
 pengguna, dengan batas jawaban yang terlihat: apa yang secara eksplisit Anda minta
 untuk diingat dijawab secara persis; apa yang tidak pernah tercatat, atau sudah
-ditarik, ditolak alih-alih ditebak; pertanyaan biasa diteruskan ke model Anda tanpa
+ditarik kembali, ditolak alih-alih ditebak; pertanyaan biasa diteruskan ke model Anda tanpa
 diubah.
 
 [Situs web](https://aethmere.com) ·
@@ -26,9 +26,9 @@ bisa bersembunyi:
 
 - **Pertanyaan yang bisa dijawab harus dijawab secara persis.** Menolak pertanyaan
   yang bisa dijawab dihitung sebagai kegagalan dalam evaluasi kami — akurasi tidak
-  pernah boleh dibeli dengan penolakan.
+  pernah bisa dibeli dengan penolakan.
 - **Pertanyaan yang tidak bisa dijawab harus ditolak.** Jika sebuah nilai tidak
-  pernah tercatat, sudah ditarik, atau ambigu, mengeluarkan nilai *apa pun* berarti
+  pernah tercatat, sudah ditarik kembali, atau ambigu, mengeluarkan nilai *apa pun* berarti
   mengarang. Jalur terkelola menolak secara deterministik.
 - **Pertanyaan biasa harus diteruskan.** Pertanyaan yang sekadar menyebut kata-kata
   seputar memori dirutekan ke model Anda, bukan ditelan.
@@ -39,7 +39,7 @@ bisa bersembunyi:
 ## Hasil terukur (evaluasi tersegel dan berbatas)
 
 Dalam evaluasi internal tersegel atas kontrak memori terkelola — kandidat dibekukan
-berdasarkan hash sebelum benih acak yang telah dikomitkan diambil, kasus dihasilkan
+berdasarkan hash sebelum benih acak yang sudah dikunci sebelumnya diambil, kasus dihasilkan
 secara deterministik, setiap jawaban dinilai oleh orakel mesin yang ditetapkan pada
 saat pembuatan, seluruh bukti disimpan:
 
@@ -48,8 +48,8 @@ saat pembuatan, seluruh bukti disimpan:
 | Kebenaran berbatas | **2,400 / 2,400 klaster benar** (8 famili tugas × 300, toleransi nol per famili) | ≥ 99.87% |
 | Penyembuhan halusinasi berbatas | **1,800 / 1,800 kegagalan baseline diperbaiki, 0 / 600 regresi** dibandingkan model 7B lokal yang diberi percakapan yang sama tanpa tata kelola | ≥ 99.83% |
 
-Kedelapan famili tugas mencakup pemanggilan langsung, himpunan dan penghitungan,
-pemanggilan bercakupan waktu, pembaruan dan konflik, penggabungan multi-lompatan,
+Kedelapan famili tugas mencakup pengingatan kembali secara langsung, himpunan dan
+penghitungan, pengingatan kembali bercakupan waktu, pembaruan dan konflik, penggabungan multi-lompatan,
 tekanan memori palsu (di mana setiap nilai yang dikeluarkan akan menjadi karangan),
 catatan kunci–nilai terbuka, serta tekanan batas (kalimat naratif yang tidak boleh
 diserap, dan pertanyaan biasa yang tidak boleh ditelan). Pada percakapan yang sama,
@@ -69,10 +69,10 @@ dan keterbatasan model yang normal tetap berlaku.
 **Memori terkelola (inti)**
 
 - Perintah memori eksplisit dengan semantik yang persis dan dapat diaudit: mencatat,
-  memperbarui, menarik, melacak, dan catatan kunci–nilai terbuka; himpunan bernilai
-  jamak; pemanggilan bercakupan waktu.
+  memperbarui, menarik kembali, melacak, dan catatan kunci–nilai terbuka; himpunan bernilai
+  jamak; pengingatan kembali bercakupan waktu.
 - Silsilah memori bertanda tangan: setiap fakta yang diterima membawa rantai yang
-  dapat diverifikasi hingga ke pesan aslinya; nilai yang telah ditarik tidak pernah
+  dapat diverifikasi hingga ke pesan aslinya; nilai yang telah ditarik kembali tidak pernah
   muncul lagi melalui kueri apa pun.
 - Konfirmasi sebelum menulis: perintah memori baru memerlukan konfirmasi eksplisit
   Anda di dalam produk sebelum apa pun disimpan.
@@ -82,11 +82,12 @@ dan keterbatasan model yang normal tetap berlaku.
 
 **Memori awan pribadi**
 
-- Ruang awan yang terisolasi per akun (sekitar 100M token perkiraan, 200 percakapan)
-  dengan pemulihan lintas perangkat; sakelar unggah per perangkat; jawaban hanya
+- Ruang awan yang terisolasi per akun (sekitar 100 juta token perkiraan yang tersebar
+  di hingga 200 percakapan) dengan pemulihan lintas perangkat; sakelar unggah
+  hidup/mati per perangkat; jawaban hanya
   menyuntikkan riwayat relevan yang berbatas — tidak pernah seluruh arsip.
 - Kunci API penyedia disimpan sebagai ciphertext AES-GCM yang terikat pada akun Anda;
-  API biasa hanya pernah melihat empat karakter terakhir.
+  API biasa tidak pernah bisa melihat lebih dari empat karakter terakhir.
 
 **Dokumen dan gambar**
 
@@ -100,7 +101,7 @@ dan keterbatasan model yang normal tetap berlaku.
 
 - Pencarian web waktu nyata multi-mesin dengan jendela kebaruan (hari / beberapa hari /
   minggu / bulan), perencanaan kueri otomatis dan percobaan ulang, serta batas hasil
-  yang disetel untuk menopang jawaban.
+  yang disetel agar jawaban tetap berpijak pada sumber yang diambil.
 - Pencarian lintas bahasa: pertanyaan berbahasa Tionghoa dipetakan secara otomatis ke
   topik pencarian internasional yang terfokus (pasar, komoditas, mata uang, dan lainnya).
 - Cuplikan langsung pasar berjangka Tiongkok untuk simbol yang didukung, diambil saat
@@ -109,7 +110,7 @@ dan keterbatasan model yang normal tetap berlaku.
 **Di mana pun Anda bekerja**
 
 - Aplikasi web seluler/desktop yang dapat dipasang (PWA) dengan jawaban streaming,
-  blok kode, tabel, dan penyalinan pesan.
+  blok kode, tabel, dan penyalinan pesan dengan sekali ketuk.
 - CLI desktop (`aethmere-cli`) dengan penautan perangkat sekali pakai: `aethmere sync`
   mencerminkan memori awan Anda secara lokal; Claude Code, Codex, dan klien MCP lain
   dapat menggunakannya melalui `cloud_memory_recall`. Baca-saja secara bawaan; unggahan

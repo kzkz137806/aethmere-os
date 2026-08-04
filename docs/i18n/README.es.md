@@ -27,22 +27,23 @@ direcciones pueda esconderse:
   respondible cuenta como fallo en nuestra evaluación: la precisión nunca se puede comprar
   a base de rechazos.
 - **Las preguntas no respondibles deben rechazarse.** Si un valor nunca se registró, fue
-  retractado o es ambiguo, entregar *cualquier* valor sería una fabricación. El carril
+  retirado o es ambiguo, entregar *cualquier* valor sería una fabricación. El carril
   gobernado rechaza, de forma determinista.
 - **Las preguntas ordinarias deben pasar.** Una pregunta que solo menciona palabras
-  relacionadas con la memoria se enruta a tu modelo, no se traga.
+  relacionadas con la memoria se enruta a tu modelo; no se retiene ni se descarta en el
+  carril gobernado.
 - **Las escrituras se confirman.** Un mensaje que parece un comando de memoria se escribe
-  solo tras tu confirmación explícita; si lo rechazas, queda como historial de chat
-  ordinario.
+  solo tras tu confirmación explícita; si lo rechazas, el mensaje queda como historial de
+  chat ordinario.
 
 ## Resultados medidos (evaluación sellada y acotada)
 
 En una evaluación interna sellada del contrato de memoria gobernada — con el candidato
-congelado por hash antes de extraer una semilla aleatoria comprometida, casos generados
-de forma determinista, cada respuesta puntuada por un oráculo automático fijado en el
-momento de la generación y todos los comprobantes conservados:
+congelado por hash antes de extraer una semilla aleatoria fijada mediante compromiso
+previo, casos generados de forma determinista, cada respuesta puntuada por un oráculo
+automático fijado en el momento de la generación y todos los comprobantes conservados:
 
-| Métrica | Resultado | Cota inferior al 95% |
+| Métrica | Resultado | Cota inferior del 95 % |
 |---|---|---|
 | Corrección acotada | **2.400 / 2.400 clústeres correctos** (8 familias de tareas × 300, tolerancia cero por familia) | ≥ 99.87% |
 | Cura acotada de alucinaciones | **1.800 / 1.800 fallos de línea base reparados, 0 / 600 regresiones** frente a un modelo local de 7B con las mismas conversaciones y sin gobernanza | ≥ 99.83% |
@@ -57,7 +58,8 @@ regresiones en los clústeres que la línea base había acertado.
 
 **Alcance, dicho con claridad:** estos son resultados acotados sobre el contrato de memoria
 gobernada de Aethmere —su gramática explícita de comandos y sus familias de consultas—,
-medidos de extremo a extremo a través de los servicios reales de ingesta y publicación.
+medidos de extremo a extremo a través de los servicios reales de ingesta y de entrega de
+valores de memoria.
 No son una afirmación de mundo abierto, no son una afirmación sobre la precisión del producto
 en su conjunto, y no son una afirmación sobre las respuestas generales de tu modelo. Fuera
 del contrato gobernado, tu modelo responde como siempre y se aplican las limitaciones
@@ -68,20 +70,21 @@ normales de los modelos.
 **Memoria gobernada (el núcleo)**
 
 - Comandos de memoria explícitos con semántica exacta y auditable: registrar, actualizar,
-  retractar, localizar y notas abiertas de clave-valor; conjuntos multivalor; recuerdo
+  retirar, localizar y notas abiertas de clave-valor; conjuntos multivalor; recuerdo
   acotado en el tiempo.
 - Linaje de memoria firmado: cada hecho aceptado lleva una cadena verificable hasta el
-  mensaje original; los valores retractados no vuelven a aparecer en ninguna consulta.
+  mensaje original; los valores retirados no vuelven a aparecer en ninguna consulta.
 - Confirmación antes de escribir: los nuevos comandos de memoria requieren tu confirmación
   explícita en el producto antes de almacenar nada.
 - Captura de texto libre con verificación local: las frases naturales pueden proponer
   candidatos de memoria mediante un modelo local y se vuelven a verificar de forma
-  determinista antes de aceptarse, con cero salida de tu texto original.
+  determinista antes de aceptarse, sin que tu texto original salga nunca del dispositivo.
 
 **Memoria personal en la nube**
 
-- Espacio en la nube aislado por cuenta (unos 100M de tokens estimados, 200 conversaciones)
-  con restauración entre dispositivos; interruptores de subida por dispositivo; las
+- Espacio en la nube aislado por cuenta (unos 100M de tokens estimados repartidos en hasta
+  200 conversaciones) con restauración entre dispositivos; interruptores de subida por
+  dispositivo; las
   respuestas inyectan solo historial acotado y relevante, nunca el archivo completo.
 - Las claves de API de proveedores se guardan como texto cifrado AES-GCM vinculado a tu
   cuenta; las APIs ordinarias solo ven los últimos cuatro caracteres.
@@ -108,7 +111,7 @@ normales de los modelos.
 **En todos los lugares donde trabajas**
 
 - Aplicación web instalable para móvil y escritorio (PWA) con respuestas en streaming,
-  bloques de código, tablas y copia de mensajes.
+  bloques de código, tablas y copia de mensajes con un solo toque.
 - CLI de escritorio (`aethmere-cli`) con vinculación de dispositivo de un solo uso:
   `aethmere sync` refleja tu memoria en la nube localmente; Claude Code, Codex y otros
   clientes MCP pueden usarla mediante `cloud_memory_recall`. Solo lectura por defecto;

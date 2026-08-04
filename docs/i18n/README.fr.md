@@ -6,9 +6,9 @@
 
 Aethmere est une couche de mémoire pour le travail assisté par IA qui traite le fait
 de **ne rien inventer** comme une exigence d'ingénierie, non comme un slogan. Elle
-dote les clients IA pris en charge d'une mémoire durable, contrôlée par l'utilisateur
-et aux frontières visibles : ce que vous avez explicitement demandé de retenir est
-restitué exactement ; ce qui n'a jamais été enregistré, ou a été retiré, fait l'objet
+dote les clients IA pris en charge d'une mémoire durable, contrôlée par l'utilisateur,
+aux frontières de réponse visibles : ce que vous avez explicitement demandé de retenir est
+restitué exactement ; ce qui n'a jamais été enregistré, ou a été révoqué, fait l'objet
 d'un refus plutôt que d'une supposition ; les questions ordinaires sont transmises
 telles quelles à votre modèle.
 
@@ -19,7 +19,7 @@ telles quelles à votre modèle.
 
 ## Pourquoi Aethmere
 
-La plupart des systèmes de mémoire IA échouent dans l'une de deux directions : ils
+La plupart des systèmes de mémoire IA échouent dans l'une des deux directions suivantes : ils
 hallucinent des souvenirs que vous ne leur avez jamais confiés, ou ils avalent les
 questions ordinaires sous des refus inutiles. La voie mémoire gouvernée d'Aethmere
 est conçue pour qu'aucune de ces deux dérives ne puisse se cacher :
@@ -28,14 +28,14 @@ est conçue pour qu'aucune de ces deux dérives ne puisse se cacher :
   Refuser une question à laquelle il est possible de répondre compte comme un échec
   dans notre évaluation — la justesse ne s'achète jamais à coups de refus.
 - **Les questions auxquelles on ne peut pas répondre doivent être refusées.** Si une
-  valeur n'a jamais été enregistrée, a été rétractée ou reste ambiguë, livrer *une*
+  valeur n'a jamais été enregistrée, a été révoquée ou reste ambiguë, livrer *une*
   valeur quelconque serait une fabrication. La voie gouvernée refuse, de manière
   déterministe.
 - **Les questions ordinaires doivent passer.** Une question qui ne fait que mentionner
   des mots liés à la mémoire est acheminée vers votre modèle, et non avalée.
 - **Les écritures sont confirmées.** Un message qui ressemble à une commande de
   mémoire n'est écrit qu'après votre confirmation explicite ; si vous refusez, il
-  reste un simple historique de conversation.
+  reste un simple message de l'historique de conversation.
 
 ## Résultats mesurés (évaluation scellée, bornée)
 
@@ -71,10 +71,10 @@ votre modèle répond comme à l'accoutumée et ses limitations habituelles s'ap
 **Mémoire gouvernée (le cœur)**
 
 - Des commandes de mémoire explicites à la sémantique exacte et auditable :
-  enregistrer, mettre à jour, rétracter, localiser, et notes clé–valeur ouvertes ;
+  enregistrer, mettre à jour, révoquer, localiser, et notes clé–valeur ouvertes ;
   ensembles multivalués ; rappel borné dans le temps.
 - Lignée de mémoire signée : chaque fait accepté porte une chaîne vérifiable
-  remontant au message d'origine ; les valeurs rétractées ne réapparaissent plus
+  remontant au message d'origine ; les valeurs révoquées ne réapparaissent plus
   dans aucune requête.
 - Confirmation avant écriture : toute nouvelle commande de mémoire exige votre
   confirmation explicite dans le produit avant le moindre stockage.
@@ -84,10 +84,11 @@ votre modèle répond comme à l'accoutumée et ses limitations habituelles s'ap
 
 **Mémoire cloud personnelle**
 
-- Espace cloud isolé par compte (environ 100M tokens estimés, 200 conversations)
+- Espace cloud isolé par compte (environ 100M tokens estimés, répartis sur un
+  maximum de 200 conversations)
   avec restauration multi-appareils ; interrupteurs d'envoi par appareil ; les
   réponses n'injectent qu'un historique borné et pertinent — jamais l'archive entière.
-- Clés d'API des fournisseurs conservées sous forme de chiffré AES-GCM lié à votre
+- Clés d'API des fournisseurs conservées sous forme de texte chiffré AES-GCM lié à votre
   compte ; les API ordinaires ne voient jamais que les quatre derniers caractères.
 
 **Documents et images**
@@ -114,7 +115,7 @@ votre modèle répond comme à l'accoutumée et ses limitations habituelles s'ap
 **Partout où vous travaillez**
 
 - Application web mobile/bureau installable (PWA) avec réponses en flux continu,
-  blocs de code, tableaux et copie des messages.
+  blocs de code, tableaux et copie des messages en un seul appui.
 - CLI de bureau (`aethmere-cli`) avec appairage unique de l'appareil : `aethmere sync`
   recopie votre mémoire cloud en local ; Claude Code, Codex et d'autres clients MCP
   peuvent l'utiliser via `cloud_memory_recall`. Lecture seule par défaut ; l'envoi
@@ -204,7 +205,7 @@ accordée. Voir [NOTICE.md](NOTICE.md).
 ## Assistance
 
 Utilisez [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) pour les
-rapports de bogues et les demandes de fonctionnalités publics. N'y incluez pas de mots
+signalements publics de bogues et les demandes publiques de fonctionnalités. N'y incluez pas de mots
 de passe, de clés d'API, de mémoires privées, de données personnelles ni de contenu de
 projet confidentiel.
 

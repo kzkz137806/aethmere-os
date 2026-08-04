@@ -23,17 +23,17 @@ Phần lớn hệ thống bộ nhớ AI thất bại theo một trong hai hướ
 lần từ chối không cần thiết. Làn bộ nhớ được quản trị của Aethmere được xây dựng
 sao cho không hướng nào có thể ẩn mình:
 
-- **Câu hỏi trả lời được thì phải trả lời chính xác.** Từ chối một câu hỏi trả lời
+- **Câu hỏi trả lời được thì phải được trả lời chính xác.** Từ chối một câu hỏi trả lời
   được bị tính là thất bại trong đánh giá của chúng tôi — độ chính xác không bao giờ
   có thể mua được bằng cách từ chối.
 - **Câu hỏi không trả lời được thì phải bị từ chối.** Nếu một giá trị chưa từng được
   ghi lại, đã bị thu hồi, hoặc mơ hồ, thì đưa ra *bất kỳ* giá trị nào cũng là bịa đặt.
   Làn được quản trị sẽ từ chối một cách tất định.
-- **Câu hỏi thông thường thì phải được cho đi qua.** Một câu hỏi chỉ tình cờ nhắc đến
+- **Câu hỏi thông thường thì phải được cho đi qua.** Một câu hỏi chỉ đơn thuần nhắc đến
   các từ ngữ về bộ nhớ sẽ được định tuyến tới mô hình của bạn, chứ không bị nuốt mất.
 - **Ghi nhớ phải được xác nhận.** Một tin nhắn trông giống lệnh ghi nhớ chỉ được ghi
-  sau khi bạn xác nhận tường minh; nếu bạn từ chối, nó vẫn chỉ là lịch sử trò chuyện
-  thông thường.
+  sau khi bạn xác nhận tường minh; nếu bạn từ chối, tin nhắn đó vẫn chỉ là lịch sử
+  trò chuyện thông thường.
 
 ## Kết quả đo được (đánh giá niêm phong, có giới hạn phạm vi)
 
@@ -46,19 +46,19 @@ lưu giữ:
 | Chỉ số | Kết quả | Cận dưới 95% |
 |---|---|---|
 | Độ chính xác có giới hạn | **2,400 / 2,400 cụm đúng** (8 họ nhiệm vụ × 300, không dung sai cho mỗi họ) | ≥ 99.87% |
-| Tỷ lệ chữa ảo giác có giới hạn | **1,800 / 1,800 lỗi của đường cơ sở được sửa, 0 / 600 hồi quy** so với một mô hình 7B chạy cục bộ nhận cùng các cuộc hội thoại nhưng không có quản trị | ≥ 99.83% |
+| Chữa ảo giác có giới hạn | **1,800 / 1,800 lỗi của đường cơ sở được sửa, 0 / 600 hồi quy** so với một mô hình 7B chạy cục bộ nhận cùng các cuộc hội thoại nhưng không có quản trị | ≥ 99.83% |
 
 Tám họ nhiệm vụ bao phủ: hồi tưởng trực tiếp, tập hợp và đếm, hồi tưởng theo phạm vi
 thời gian, cập nhật và xung đột, nối nhiều bước, áp lực ký ức giả (nơi mọi giá trị
 được đưa ra đều sẽ là bịa đặt), ghi chú khóa–giá trị mở, và áp lực ranh giới (những
 câu trần thuật không được phép nạp vào, và những câu hỏi thông thường không được phép
 bị nuốt). Trên cùng những cuộc hội thoại đó, đường cơ sở 7B cục bộ không có quản trị
-đã bịa đặt hoặc trả lời sai ở 75% số cụm; làn được quản trị đã sửa toàn bộ, với zero
-hồi quy trên những cụm mà đường cơ sở trả lời đúng.
+đã bịa đặt hoặc trả lời sai ở 75% số cụm; làn được quản trị đã sửa toàn bộ, không có hồi quy
+nào trên những cụm mà đường cơ sở trả lời đúng.
 
 **Phạm vi, nói thẳng:** đây là những kết quả có giới hạn trên hợp đồng bộ nhớ được
 quản trị của Aethmere — tức ngữ pháp lệnh tường minh và các họ truy vấn của nó — được
-đo đầu-cuối xuyên qua các dịch vụ nạp vào và phát hành thực tế. Chúng không phải là
+đo đầu-cuối xuyên qua các dịch vụ thực tế nạp vào và đưa ra giá trị bộ nhớ. Chúng không phải là
 một tuyên bố về thế giới mở, không phải một tuyên bố về độ chính xác của toàn bộ sản
 phẩm, và không phải một tuyên bố về các câu trả lời tổng quát của mô hình bạn dùng.
 Bên ngoài hợp đồng được quản trị, mô hình của bạn trả lời như thường lệ và các giới
@@ -71,19 +71,19 @@ hạn thông thường của mô hình vẫn hiện diện.
 - Các lệnh ghi nhớ tường minh với ngữ nghĩa chính xác, có thể kiểm toán: ghi lại,
   cập nhật, thu hồi, định vị, và ghi chú khóa–giá trị mở; tập hợp nhiều giá trị;
   hồi tưởng theo phạm vi thời gian.
-- Chuỗi nguồn gốc bộ nhớ có ký số: mỗi sự kiện được chấp nhận đều mang một chuỗi có
+- Chuỗi nguồn gốc bộ nhớ có ký số: mỗi dữ kiện được chấp nhận đều mang một chuỗi có
   thể kiểm chứng truy ngược về tin nhắn gốc; giá trị đã thu hồi không bao giờ xuất
   hiện lại qua bất kỳ truy vấn nào.
 - Xác nhận trước khi ghi: các lệnh ghi nhớ mới cần bạn xác nhận tường minh trong sản
   phẩm trước khi bất cứ điều gì được lưu lại.
 - Thu nhận câu tự do kèm kiểm chứng cục bộ: các câu tự nhiên có thể đề cử ứng viên bộ
   nhớ thông qua một mô hình cục bộ và được kiểm chứng lại một cách tất định trước khi
-  được chấp nhận — với zero dữ liệu gốc của bạn rời khỏi máy.
+  được chấp nhận — và không có bất kỳ dữ liệu gốc nào của bạn rời khỏi máy.
 
 **Bộ nhớ đám mây cá nhân**
 
-- Không gian đám mây cô lập theo tài khoản (khoảng 100M token ước tính, 200 cuộc hội
-  thoại) với khôi phục xuyên thiết bị; công tắc tải lên riêng cho từng thiết bị; câu
+- Không gian đám mây cô lập theo tài khoản (khoảng 100M token ước tính, trải trên tối
+  đa 200 cuộc hội thoại) với khôi phục xuyên thiết bị; công tắc tải lên riêng cho từng thiết bị; câu
   trả lời chỉ chèn phần lịch sử liên quan và có giới hạn — không bao giờ nạp toàn bộ
   kho lưu trữ.
 - Khóa API của nhà cung cấp được lưu dưới dạng bản mã AES-GCM gắn với tài khoản của
@@ -111,7 +111,7 @@ hạn thông thường của mô hình vẫn hiện diện.
 **Ở mọi nơi bạn làm việc**
 
 - Ứng dụng web di động/máy tính có thể cài đặt (PWA) với câu trả lời dạng phát trực
-  tiếp, khối mã, bảng biểu và sao chép tin nhắn.
+  tiếp, khối mã, bảng biểu và sao chép tin nhắn chỉ bằng một lần chạm.
 - CLI trên máy tính (`aethmere-cli`) với liên kết thiết bị dùng một lần: `aethmere sync`
   phản chiếu bộ nhớ đám mây của bạn về máy; Claude Code, Codex và các ứng dụng MCP khác
   có thể dùng nó qua `cloud_memory_recall`. Mặc định chỉ đọc; tải lên đòi hỏi bật
