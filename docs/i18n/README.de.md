@@ -2,7 +2,7 @@
 
 > Öffentliches Distributionsrepository — **dies ist kein Open-Source-Repository**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | **Deutsch** | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | **Deutsch** | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere ist eine Gedächtnisschicht für KI-gestütztes Arbeiten, die **das Nicht-Erfinden**
 als technische Anforderung behandelt, nicht als Werbeversprechen. Sie gibt unterstützten
@@ -37,24 +37,54 @@ dass sich keine der beiden Richtungen verstecken kann:
 
 ## Gemessene Ergebnisse (versiegelte, begrenzte Evaluation)
 
-In einer versiegelten internen Evaluation des kontrollierten Gedächtnisvertrags — der
-Kandidat per Hash eingefroren, bevor ein vorab festgelegter Zufallsstartwert (Seed) gezogen wurde,
-die Fälle deterministisch erzeugt, jede Antwort von einem zum Erzeugungszeitpunkt
-fixierten maschinellen Orakel bewertet, sämtliche Belege aufbewahrt:
+**Was gemessen wurde:** der kontrollierte Gedächtnisvertrag von Aethmere — dessen
+explizite Befehlsgrammatik und acht Abfrage-Aufgabenfamilien (8 × 300 Cluster) —
+durchgehend über die realen Aufnahme- und Freigabedienste. Kontrollierte Antworten
+werden von deterministischen Diensten erzeugt, **nicht von einem improvisierenden
+großen Sprachmodell**, weshalb die untenstehenden Zahlen nicht davon abhängen,
+welches Anbietermodell Sie mitbringen.
 
-| Kennzahl | Ergebnis | 95% untere Schranke |
+**Wie gemessen wurde:** Das Kandidatensystem wurde zuerst per Hash eingefroren, und
+erst danach wurde ein vorab festgelegter Zufallsstartwert (Seed) gezogen; die Fälle
+wurden deterministisch erzeugt, jede Antwort wurde von einem zum Erzeugungszeitpunkt
+fixierten maschinellen Orakel bewertet, und sämtliche Belege wurden aufbewahrt. Die
+Bewertung verlangt exakte Antworten bei beantwortbaren Fragen, Verweigerung bei
+unbeantwortbaren und Durchleitung bei gewöhnlichen — jede der drei Richtungen fällt
+gesondert durch, sodass sich Korrektheit niemals durch Verweigerungen gewinnen lässt.
+
+**Womit verglichen wurde:** „vorher“ = dieselben Konversationen, direkt an ein lokales
+qwen2.5:7b gegeben (Ollama, Temperatur 0, ohne Governance); „nachher“ = die
+kontrollierte Gedächtnisspur. Die Bewertung der Baseline ist bewusst großzügig (eine
+Antwort, die den korrekten Wert enthält, zählt als korrekt, chinesische Zahlformen
+eingeschlossen), sodass die Heilungszahlen konservativ sind. Der Vorschlagsgeber der
+Freitext-Erfassungsspur ist dasselbe lokale 7B-Modell, bei null Abfluss Ihres
+Originaltexts.
+
+| Aufgabenfamilie | Vorher (7B, ungesteuert) | Nachher (kontrollierte Spur) |
 |---|---|---|
-| Begrenzte Korrektheit | **2,400 / 2,400 Cluster korrekt** (8 Aufgabenfamilien × 300, Null-Toleranz je Familie) | ≥ 99.87% |
-| Begrenzte Halluzinationsheilung | **1,800 / 1,800 Baseline-Fehler behoben, 0 / 600 Regressionen** gegenüber einem lokalen 7B-Modell mit denselben Konversationen ohne Governance | ≥ 99.83% |
+| Direkte Erinnerung | 41 / 300 (13.7%) | **300 / 300** |
+| Mengen und Zählen | 98 / 300 (32.7%) | **300 / 300** |
+| Zeitlich eingegrenzte Erinnerung | 63 / 300 (21.0%) | **300 / 300** |
+| Aktualisierungen und Konflikte | 41 / 300 (13.7%) | **300 / 300** |
+| Mehrschritt-Verknüpfungen | 65 / 300 (21.7%) | **300 / 300** |
+| Falscherinnerungs-Druck | 45 / 300 (15.0%) | **300 / 300** |
+| Offene Schlüssel-Wert-Notizen | 34 / 300 (11.3%) | **300 / 300** |
+| Grenzfall-Druck * | 213 / 300 (71.0%) | **300 / 300** |
+| **Gesamt** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, 95% einseitige untere Schranke ≥ 99.87%)** |
+
+\* Gewöhnliche Fragen in der Grenzfall-Familie werden der Baseline automatisch
+gutgeschrieben (das Modell soll sie ja beantworten), weshalb ihr Baseline-Anteil
+höher ausfällt.
 
 Die acht Aufgabenfamilien decken ab: direkte Erinnerung, Mengen und Zählen,
 zeitlich eingegrenzte Erinnerung, Aktualisierungen und Konflikte, Mehrschritt-Verknüpfungen,
 Falscherinnerungs-Druck (wo jeder herausgegebene Wert eine Erfindung wäre), offene
 Schlüssel-Wert-Notizen sowie Grenzfall-Druck (erzählende Sätze, die nicht aufgenommen
-werden dürfen, und gewöhnliche Fragen, die nicht geschluckt werden dürfen). Bei denselben
-Konversationen erfand oder irrte die ungesteuerte lokale 7B-Baseline bei 75% der Cluster;
-die kontrollierte Spur behob sie alle, ohne Regressionen bei den Clustern, die die
-Baseline richtig hatte.
+werden dürfen, und gewöhnliche Fragen, die nicht geschluckt werden dürfen).
+Heilungsbilanz: Alle 1,800 Cluster, bei denen die Baseline erfand oder irrte, wurden
+von der kontrollierten Spur **behoben**, bei **null Regressionen** unter den 600, die
+die Baseline richtig hatte — begrenzte Heilung 100% (95% einseitige untere Schranke
+≥ 99.83%).
 
 **Geltungsbereich, klar gesagt:** Dies sind begrenzte Ergebnisse zum kontrollierten
 Gedächtnisvertrag von Aethmere — dessen expliziter Befehlsgrammatik und Abfragefamilien —
@@ -195,7 +225,7 @@ Aethmere verwendet ein Modell aus öffentlichem Client und privatem Kern:
 
 Die Inhalte dieses Repositorys und seiner Release-Assets sind proprietär, sofern eine
 Datei nicht ausdrücklich etwas anderes bestimmt. Es wird keine Open-Source-Lizenz
-gewährt. Siehe [NOTICE.md](NOTICE.md).
+gewährt. Siehe [NOTICE.md](../../NOTICE.md).
 
 ## Support
 
@@ -204,4 +234,4 @@ Verwenden Sie [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) 
 API-Schlüssel, privaten Erinnerungen, personenbezogenen Daten oder vertraulichen
 Projektinhalte bei.
 
-Bei Sicherheitsproblemen folgen Sie [SECURITY.md](SECURITY.md).
+Bei Sicherheitsproblemen folgen Sie [SECURITY.md](../../SECURITY.md).

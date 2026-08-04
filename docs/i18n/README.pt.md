@@ -2,7 +2,7 @@
 
 > Repositório público de distribuição — **este não é um repositório de código aberto**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | **Português** | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | **Português** | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere é uma camada de memória para trabalho assistido por IA que trata **não
 inventar** como um requisito de engenharia, não como um slogan. Ela oferece aos
@@ -37,24 +37,53 @@ nenhuma das duas direções possa se esconder:
 
 ## Resultados medidos (avaliação selada e limitada)
 
-Em uma avaliação interna selada do contrato de memória governada — candidato
-congelado por hash antes do sorteio de uma semente aleatória previamente
-registrada (pré-comprometida em commit), casos gerados de forma determinística, cada resposta avaliada por um
-oráculo de máquina fixado no momento da geração, todos os comprovantes preservados:
+**O que foi medido:** o contrato de memória governada da Aethmere — sua gramática
+explícita de comandos e oito famílias de tarefas de consulta — de ponta a ponta
+através dos serviços reais de ingestão e liberação. As respostas governadas são
+produzidas por serviços determinísticos, **não por um grande modelo de linguagem
+improvisando**, de modo que os números abaixo não dependem de qual modelo de
+provedor você use.
 
-| Endpoint | Resultado | Limite inferior de 95% |
+**Como foi medido:** o sistema candidato foi primeiro congelado por hash e só
+então foi sorteada uma semente aleatória previamente registrada (pré-comprometida);
+os casos foram gerados de forma determinística, cada resposta foi avaliada por um
+oráculo de máquina fixado no momento da geração e todos os comprovantes foram
+preservados. A avaliação exige respostas exatas nas perguntas respondíveis,
+recusa nas não respondíveis e passagem adiante nas comuns — cada direção falha
+separadamente, de modo que a precisão nunca pode ser obtida por meio de recusas.
+
+**Contra o que foi comparado:** "antes" = as mesmas conversas entregues
+diretamente a um qwen2.5:7b local (Ollama, temperatura 0, sem governança);
+"depois" = a pista de memória governada. A pontuação do baseline é
+deliberadamente generosa (uma resposta que contenha o valor correto conta como
+correta, incluindo formas numéricas em chinês), portanto os números de cura são
+conservadores. O proponente da pista de captura em texto livre é o mesmo 7B
+local, com zero saída do seu texto original.
+
+| Família de tarefas | Antes (7B, sem governança) | Depois (pista governada) |
 |---|---|---|
-| Correção limitada | **2,400 / 2,400 clusters corretos** (8 famílias de tarefas × 300, tolerância zero por família) | ≥ 99.87% |
-| Cura de alucinação limitada | **1,800 / 1,800 falhas de baseline reparadas, 0 / 600 regressões** frente a um modelo local 7B que recebeu as mesmas conversas sem governança | ≥ 99.83% |
+| Recuperação direta | 41 / 300 (13.7%) | **300 / 300** |
+| Conjuntos e contagem | 98 / 300 (32.7%) | **300 / 300** |
+| Recuperação delimitada no tempo | 63 / 300 (21.0%) | **300 / 300** |
+| Atualizações e conflitos | 41 / 300 (13.7%) | **300 / 300** |
+| Junções multi-salto | 65 / 300 (21.7%) | **300 / 300** |
+| Pressão de memória falsa | 45 / 300 (15.0%) | **300 / 300** |
+| Notas abertas de chave–valor | 34 / 300 (11.3%) | **300 / 300** |
+| Pressão de fronteira * | 213 / 300 (71.0%) | **300 / 300** |
+| **Total** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, limite inferior unilateral de 95% ≥ 99.87%)** |
+
+\* As perguntas comuns da família de fronteira são creditadas automaticamente ao
+baseline (o modelo deve respondê-las), e é por isso que a sua parcela no baseline
+é mais alta.
 
 As oito famílias de tarefas cobrem recuperação direta, conjuntos e contagem,
 recuperação delimitada no tempo, atualizações e conflitos, junções multi-salto,
 pressão de memória falsa (em que qualquer valor liberado seria uma fabricação),
 notas abertas de chave–valor e pressão de fronteira (frases narrativas que não
-podem ser ingeridas e perguntas comuns que não podem ser engolidas). Nas mesmas
-conversas, o baseline local 7B sem governança fabricou ou errou em 75% dos
-clusters; a pista governada reparou todos eles, com zero regressões nos clusters
-que o baseline acertou.
+podem ser ingeridas e perguntas comuns que não podem ser engolidas). Contabilidade
+da cura: todos os 1,800 clusters em que o baseline fabricou ou errou foram
+**reparados** pela pista governada, com **zero regressões** nos 600 que o baseline
+acertou — cura limitada de 100% (limite inferior unilateral de 95% ≥ 99.83%).
 
 **Escopo, dito com clareza:** estes são resultados limitados sobre o contrato de
 memória governada da Aethmere — sua gramática explícita de comandos e suas famílias
@@ -195,7 +224,7 @@ A Aethmere adota um modelo de cliente público/núcleo privado:
 
 O conteúdo deste repositório e de seus artefatos de release é proprietário, salvo
 quando um arquivo declarar explicitamente o contrário. Nenhuma licença de código
-aberto é concedida. Veja [NOTICE.md](NOTICE.md).
+aberto é concedida. Veja [NOTICE.md](../../NOTICE.md).
 
 ## Suporte
 
@@ -203,4 +232,4 @@ Use o [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) para
 relatos públicos de bugs e pedidos de funcionalidades. Não inclua senhas, chaves de
 API, memórias privadas, dados pessoais ou conteúdo confidencial de projetos.
 
-Para questões de segurança, siga o [SECURITY.md](SECURITY.md).
+Para questões de segurança, siga o [SECURITY.md](../../SECURITY.md).

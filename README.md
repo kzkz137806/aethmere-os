@@ -1,117 +1,115 @@
 # Aethmere · 识海
 
-> Public distribution repository — **this is not an open-source repository**.
+> 公开分发仓库 — **本仓库不是开源仓库**。
 
-**English** | [简体中文](docs/i18n/README.zh-CN.md) | [日本語](docs/i18n/README.ja.md) | [한국어](docs/i18n/README.ko.md) | [ไทย](docs/i18n/README.th.md) | [Tiếng Việt](docs/i18n/README.vi.md) | [Bahasa Indonesia](docs/i18n/README.id.md) | [Bahasa Melayu](docs/i18n/README.ms.md) | [Filipino](docs/i18n/README.fil.md) | [Español](docs/i18n/README.es.md) | [Português](docs/i18n/README.pt.md) | [Français](docs/i18n/README.fr.md) | [Deutsch](docs/i18n/README.de.md) | [Русский](docs/i18n/README.ru.md) | [العربية](docs/i18n/README.ar.md)
+**简体中文** | [English](docs/i18n/README.en.md) | [日本語](docs/i18n/README.ja.md) | [한국어](docs/i18n/README.ko.md) | [ไทย](docs/i18n/README.th.md) | [Tiếng Việt](docs/i18n/README.vi.md) | [Bahasa Indonesia](docs/i18n/README.id.md) | [Bahasa Melayu](docs/i18n/README.ms.md) | [Filipino](docs/i18n/README.fil.md) | [Español](docs/i18n/README.es.md) | [Português](docs/i18n/README.pt.md) | [Français](docs/i18n/README.fr.md) | [Deutsch](docs/i18n/README.de.md) | [Русский](docs/i18n/README.ru.md) | [العربية](docs/i18n/README.ar.md)
 
-Aethmere is a memory layer for AI-assisted work that treats **not making things up**
-as an engineering requirement, not a slogan. It gives supported AI clients durable,
-user-controlled memory with visible answer boundaries: what you explicitly asked it
-to remember is answered exactly; what was never recorded, or was withdrawn, is
-refused instead of guessed; ordinary questions pass through to your model untouched.
+Aethmere（识海）是面向 AI 辅助工作的记忆层，把「**不编造**」当作工程要求而不是口号。
+它为受支持的 AI 客户端提供持久、用户可控、边界可见的记忆：你明确要求记住的，精确作答；
+从未记录或已撤回的，拒绝作答而不是猜测；普通问题原样交给你的模型，不被吞掉。
 
-[Website](https://aethmere.com) ·
-[Web app](https://app.aethmere.com) ·
-[Latest release](https://github.com/kzkz137806/aethmere-os/releases/latest) ·
-[Report an issue](https://github.com/kzkz137806/aethmere-os/issues)
+[官网](https://aethmere.com) ·
+[Web 应用](https://app.aethmere.com) ·
+[最新版本](https://github.com/kzkz137806/aethmere-os/releases/latest) ·
+[报告问题](https://github.com/kzkz137806/aethmere-os/issues)
 
-## Why Aethmere
+## 为什么是 Aethmere
 
-Most AI memory systems fail in one of two directions: they hallucinate memories you
-never gave them, or they swallow ordinary questions with needless refusals. Aethmere's
-governed memory lane is built so that neither direction can hide:
+多数 AI 记忆系统会在两个方向之一失守：编造你从没说过的"记忆"，或者用无谓的拒答
+吞掉普通问题。Aethmere 的受治理记忆车道让两个方向都无处藏身：
 
-- **Answerable questions must be answered exactly.** Refusing an answerable question
-  counts as a failure in our evaluation — accuracy can never be bought with refusals.
-- **Unanswerable questions must be refused.** If a value was never recorded, was
-  retracted, or is ambiguous, releasing *any* value would be a fabrication. The
-  governed lane refuses, deterministically.
-- **Ordinary questions must pass through.** A question that merely mentions memory
-  words is routed to your model, not swallowed.
-- **Writes are confirmed.** A message that looks like a memory command is written
-  only after your explicit confirmation; declining keeps it as ordinary chat history.
+- **可答的必须精确答对。** 在我们的评测里，对可答问题拒答记为失败——靠拒答刷不出
+  正确率。
+- **不可答的必须拒绝。** 从未记录、已撤回、或存在歧义时，给出任何值都是编造。
+  受治理车道确定性地拒绝。
+- **普通问题必须放行。** 只是碰到了"记录/记忆"这类字眼的普通问题，会被路由给
+  你的模型，不会被吞。
+- **写入要确认。** 形似记忆命令的消息，须经你明确确认才会写入；选择"不写入"则
+  仅保留为普通聊天记录。
 
-## Measured results (sealed, bounded evaluation)
+## 实测结果（密封有界评测）
 
-In a sealed internal evaluation of the governed memory contract — candidate frozen
-by hash before a committed random seed was drawn, cases generated deterministically,
-every answer scored by a machine oracle fixed at generation time, all receipts kept:
+**测的是什么**：Aethmere 受治理记忆契约——显式命令语法与八个查询任务族——端到端
+穿过真实的摄取与发布服务。受治理车道的答案由确定性服务产生，**不依赖任何大模型的
+临场发挥**，所以下面的数字不随你接入哪家模型而变。
 
-| Endpoint | Result | 95% lower bound |
+**怎么测的**：候选系统先按哈希冻结，之后才抽取事先承诺的随机种子；用例确定性生成，
+每题由生成时固定的机器判分器裁决，全部回执留存。判分对可答题要求逐字精确、对不可答
+题要求拒绝、对普通问题要求放行——三个方向各自计失败，靠拒答刷不出正确率。
+
+**对照什么**：「治理前」= 同样的对话直接交给本地 qwen2.5:7b（Ollama，温度 0，无任何
+治理）作答；「治理后」= 受治理记忆车道。基线判分刻意从宽（回答里含正确值即记对，
+中文数字写法也认），治愈数字因此偏保守。自由句捕获用的提名模型同为本地 7B，原文零外发。
+
+| 任务族 | 治理前（7B 直接作答） | 治理后（受治理车道） |
 |---|---|---|
-| Bounded correctness | **2,400 / 2,400 clusters correct** (8 task families × 300, zero tolerance per family) | ≥ 99.87% |
-| Bounded hallucination cure | **1,800 / 1,800 baseline failures repaired, 0 / 600 regressions** vs. a local 7B model given the same conversations without governance | ≥ 99.83% |
+| 直接回忆 | 41 / 300（13.7%） | **300 / 300** |
+| 集合与计数 | 98 / 300（32.7%） | **300 / 300** |
+| 按时间回忆 | 63 / 300（21.0%） | **300 / 300** |
+| 更新与冲突 | 41 / 300（13.7%） | **300 / 300** |
+| 多跳连接 | 65 / 300（21.7%） | **300 / 300** |
+| 假记忆压力 | 45 / 300（15.0%） | **300 / 300** |
+| 开放键值笔记 | 34 / 300（11.3%） | **300 / 300** |
+| 边界压力 * | 213 / 300（71.0%） | **300 / 300** |
+| **合计** | **600 / 2,400（25.0%）** | **2,400 / 2,400（100%，95% 单侧下界 ≥ 99.87%）** |
 
-The eight task families cover direct recall, sets and counting, time-scoped recall,
-updates and conflicts, multi-hop joins, false-memory pressure (where every released
-value would be a fabrication), open key–value notes, and boundary pressure (narrative
-sentences that must not be ingested, and ordinary questions that must not be
-swallowed). On the same conversations, the ungoverned local 7B baseline fabricated
-or erred on 75% of clusters; the governed lane repaired all of them with zero
-regressions on the clusters the baseline got right.
+\* 边界族中的普通问题对基线一律记对（模型本就该答），故该族基线占比偏高。
 
-**Scope, stated plainly:** these are bounded results on Aethmere's governed memory
-contract — its explicit command grammar and query families — measured end to end
-through the real ingestion and release services. They are not an open-world claim,
-not a whole-product accuracy claim, and not a claim about your model's general
-answers. Outside the governed contract, your model answers as usual and normal
-model limitations apply.
+八个任务族覆盖：直接回忆、集合与计数、按时间回忆、更新与冲突、多跳连接、假记忆压力
+（构造上任何给值都是编造）、开放键值笔记、以及边界压力（叙述句不得被误摄取、普通问题
+不得被误吞）。治愈口径：基线答错或编造的 1,800 簇被受治理车道**全部修复**，基线本就
+答对的 600 簇**零回退**——有界治愈率 100%（95% 单侧下界 ≥ 99.83%）。
 
-## What Aethmere does
+**范围，说清楚：** 以上是 Aethmere 受治理记忆契约（其显式命令语法与查询族）内的
+有界结果，端到端穿过真实的摄取与发布服务测得。它不是开放世界主张，不是产品整体
+正确率主张，也不是对你的模型一般回答的主张。契约之外，你的模型照常作答，模型的
+一般局限照常存在。
 
-**Governed memory (the core)**
+## Aethmere 能做什么
 
-- Explicit memory commands with exact, auditable semantics: record, update, retract,
-  locate, and open key–value notes; multi-value sets; time-scoped recall.
-- Signed memory lineage: every accepted fact carries a verifiable chain from the
-  original message; retracted values never surface again through any query.
-- Confirm-before-write: new memory commands require your explicit confirmation
-  in the product before anything is stored.
-- Free-form capture with local verification: natural sentences can propose memory
-  candidates via a local model and are deterministically re-verified before
-  acceptance — with zero egress of your original text.
+**受治理记忆（核心）**
 
-**Personal cloud memory**
+- 显式记忆命令，语义精确可审计：记录、更新、撤回、定位、开放键值笔记；多值集合；
+  按时间回忆。
+- 签名记忆链：每条被接受的事实都携带可验证的、回溯到原始消息的链条；撤回的值不会再
+  通过任何查询出现。
+- 写入前确认：新的记忆命令须经你在产品中明确确认才会入库。
+- 自由句捕获+本地校验：自然语句可经本地模型提名记忆候选，接受前逐条确定性复核——
+  你的原文零外发。
 
-- Account-isolated cloud space (roughly 100M estimated tokens across up to 200
-  conversations) with cross-device restore; per-device upload switches; answers
-  inject only bounded, relevant history — never the whole archive.
-- Provider API keys stored as AES-GCM ciphertext bound to your account; ordinary
-  APIs only ever see the last four characters.
+**个人云端记忆**
 
-**Documents and images**
+- 账号隔离的云空间（约 1 亿估算 Token、200 个会话），跨设备恢复；每台设备独立的
+  上传开关；回答只注入有界的相关历史片段——从不整库灌入。
+- 模型 API Key 以账号绑定的 AES-GCM 密文保存，普通接口至多只能看到末四位。
 
-- Document knowledge base: TXT, Markdown, CSV, JSON, HTML, and PDF; text is
-  extracted in your browser and only account-isolated retrieval fragments and a
-  hybrid vector index are stored — original files are not kept.
-- Image OCR: extracted text is inserted with a source prefix and a
-  needs-review summary; recognition runs through your configured provider.
+**文档与图片**
 
-**Real-time search**
+- 文档知识库：TXT、Markdown、CSV、JSON、HTML、PDF；文字在你的浏览器里提取，
+  只保存账号隔离的检索片段与混合向量索引——不保留原始文件。
+- 图片 OCR：识别出的文字会带上来源前缀插入，并附一段"需重点核对"的摘要；识别经由你配置的
+  模型服务完成。
 
-- Multi-engine real-time web search with recency windows (day / days / week / month),
-  automatic query planning and retries, and result caps tuned for answer grounding.
-- Cross-language retrieval: Chinese questions are mapped to focused international
-  search topics automatically (markets, commodities, currencies and more).
-- Live China futures snapshots for supported symbols, fetched at answer time and
-  cited as data sources in the reply.
+**实时搜索**
 
-**Everywhere you work**
+- 多引擎实时网络搜索，支持时间窗（当天/数天/一周/一月）、自动查询规划与重试，
+  结果数量按作答需要裁剪。
+- 跨语言检索：中文问题自动映射为聚焦的国际检索主题（行情、商品、汇率等）。
+- 国内期货实时行情快照：支持的品种在回答时实时拉取，并在回复中标注数据来源。
 
-- Installable mobile/desktop web app (PWA) with streaming answers, code blocks,
-  tables, and one-tap message copying.
-- Desktop CLI (`aethmere-cli`) with one-time device linking: `aethmere sync`
-  mirrors your cloud memory locally; Claude Code, Codex, and other MCP clients can
-  use it through `cloud_memory_recall`. Read-only by default; upload requires an
-  explicit double opt-in.
-- Chat channels: bind Telegram (bot DM) or Discord (`/aethmere ask`, ephemeral
-  replies) to your account with one-time codes; unbinding cuts access immediately.
-- Server-side skills hub: curated capability cards are routed automatically after
-  login — no manual skill wiring.
+**在你工作的每个地方**
 
-## Install Aethmere CLI
+- 可安装的移动/桌面 Web 应用（PWA）：流式回答、代码块、表格、消息复制。
+- 桌面 CLI（`aethmere-cli`）+ 一次性设备连接码：`aethmere sync` 把云端记忆同步到
+  本机；Claude Code、Codex 及其他 MCP 客户端可经 `cloud_memory_recall` 使用。
+  默认只读；上传须双重明确开启。
+- 聊天渠道：一次性连接码绑定 Telegram（机器人私聊）或 Discord（`/aethmere ask`，
+  仅提问者可见的回复）；解绑立即失效。
+- 服务端技能库：登录后自动路由精选能力卡——无需手动配置技能。
 
-Requirements: Node.js 22 LTS (`>=22.13.0 <23`).
+## 安装 Aethmere CLI
+
+要求：Node.js 22 LTS（`>=22.13.0 <23`）。
 
 ```bash
 npm install -g https://github.com/kzkz137806/aethmere-os/releases/download/v0.7.0/aethmere-cli-0.7.0.tgz
@@ -120,72 +118,65 @@ aethmere connect
 aethmere doctor --profile package
 ```
 
-Expected version:
+预期版本：
 
 ```text
 Aethmere CLI 0.7.0
 ```
 
-`aethmere connect` creates a user-level connection for supported AI clients. You
-do not need to reconnect when you switch project folders. Local use does not
-require a web invitation. Cloud login and synchronization are optional, and
-desktop upload remains off until you turn it on.
+`aethmere connect` 为受支持的 AI 客户端建立用户级连接，换项目目录无需重连。
+本地使用不需要网页邀请。云端登录与同步是可选的；桌面上传在用户开启前保持关闭。
 
-For a step-by-step Chinese guide, visit
-[aethmere.com](https://aethmere.com/#install).
+图文安装指南见 [aethmere.com](https://aethmere.com/#install)。
 
-## Verify the download
+## 校验下载
 
-SHA-256 for `aethmere-cli-0.7.0.tgz`:
+`aethmere-cli-0.7.0.tgz` 的 SHA-256：
 
 ```text
 964903d1f5787e6fb58dfe37a762d29c966971abd20e06a2b22cdcfe9954a2a6
 ```
 
-PowerShell:
+PowerShell：
 
 ```powershell
 Get-FileHash .\aethmere-cli-0.7.0.tgz -Algorithm SHA256
 ```
 
-macOS/Linux:
+macOS/Linux：
 
 ```bash
 shasum -a 256 aethmere-cli-0.7.0.tgz
 ```
 
-The CLI also verifies signed update metadata, package size, and SHA-256 before an
-update is installed. Updates are never installed without confirmation.
+CLI 在安装更新前会校验签名的更新元数据、包大小与 SHA-256；未经确认不会安装更新。
 
-## What is in this repository
+## 本仓库包含什么
 
-This public repository is the official home for:
+本公开仓库是以下内容的官方所在：
 
-- release downloads and checksums;
-- installation and update instructions;
-- public changelogs;
-- issue tracking and security reporting.
+- 版本下载与校验和；
+- 安装与更新说明；
+- 公开更新日志；
+- 问题跟踪与安全报告。
 
-The proprietary Aethmere core, private knowledge systems, evaluation material,
-service implementation, and internal development history are **not included**.
+Aethmere 专有核心、私有知识系统、评测材料、服务实现与内部开发历史**不包含**在内。
 
-## Product model
+## 产品模型
 
-Aethmere uses a public-client/private-core model:
+Aethmere 采用公开客户端/私有核心模型：
 
-- public distribution and integration entry points;
-- proprietary hosted core services;
-- downloadable consumer client;
-- no public disclosure of the core source code.
+- 公开的分发与集成入口；
+- 专有的托管核心服务；
+- 可下载的消费者客户端；
+- 核心源码不公开披露。
 
-The contents of this repository and its release assets are proprietary unless a
-file explicitly states otherwise. No open-source license is granted. See
-[NOTICE.md](NOTICE.md).
+除非文件另有明确说明，本仓库内容及其发布产物均为专有。不授予任何开源许可。
+见 [NOTICE.md](NOTICE.md)。
 
-## Support
+## 支持
 
-Use [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) for public
-bug reports and feature requests. Do not include passwords, API keys, private
-memories, personal data, or confidential project content.
+公开的缺陷报告与功能请求请用 [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues)。
+请勿包含密码、API Key、私人记忆、个人数据或保密项目内容。
 
-For security issues, follow [SECURITY.md](SECURITY.md).
+安全问题请按 [SECURITY.md](SECURITY.md) 处理。

@@ -2,7 +2,7 @@
 
 > Dépôt de distribution publique — **ce dépôt n'est pas un dépôt open source**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | **Français** | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | **Français** | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere est une couche de mémoire pour le travail assisté par IA qui traite le fait
 de **ne rien inventer** comme une exigence d'ingénierie, non comme un slogan. Elle
@@ -39,24 +39,55 @@ est conçue pour qu'aucune de ces deux dérives ne puisse se cacher :
 
 ## Résultats mesurés (évaluation scellée, bornée)
 
-Lors d'une évaluation interne scellée du contrat de mémoire gouvernée — candidat gelé
-par empreinte avant le tirage d'une graine aléatoire engagée au préalable, cas générés
-de façon déterministe, chaque réponse notée par un oracle machine figé au moment de la
-génération, tous les reçus conservés :
+**Ce qui a été mesuré :** le contrat de mémoire gouvernée d'Aethmere — sa grammaire de
+commandes explicite et ses huit familles de tâches de requête — de bout en bout, à
+travers les services réels d'ingestion et de restitution. Les réponses gouvernées sont
+produites par des services déterministes, **et non par un grand modèle de langage qui
+improvise** : les chiffres ci-dessous ne dépendent donc pas du modèle de fournisseur
+que vous apportez.
 
-| Critère | Résultat | Borne inférieure à 95 % |
+**Comment cela a été mesuré :** le système candidat a d'abord été gelé par empreinte,
+et ce n'est qu'ensuite qu'une graine aléatoire engagée au préalable a été tirée ; les
+cas ont été générés de façon déterministe, chaque réponse a été notée par un oracle
+machine figé au moment de la génération, et tous les reçus ont été conservés. La
+notation exige des réponses exactes aux questions auxquelles on peut répondre, un
+refus pour celles auxquelles on ne peut pas répondre, et le passage pour les questions
+ordinaires — chaque direction échoue séparément, de sorte que la justesse ne peut
+jamais être gagnée à coups de refus.
+
+**Ce à quoi cela a été comparé :** « avant » = les mêmes conversations soumises
+directement à un qwen2.5:7b local (Ollama, température 0, sans gouvernance) ; « après »
+= la voie mémoire gouvernée. La notation de la référence est délibérément généreuse
+(une réponse contenant la valeur correcte est comptée comme correcte, formes
+numérales chinoises incluses), de sorte que les chiffres de guérison sont
+conservateurs. Le proposeur de la voie de capture en langage libre est ce même 7B
+local, sans aucune sortie de votre texte original.
+
+| Famille de tâches | Avant (7B, non gouverné) | Après (voie gouvernée) |
 |---|---|---|
-| Justesse bornée | **2,400 / 2,400 clusters corrects** (8 familles de tâches × 300, tolérance zéro par famille) | ≥ 99.87% |
-| Guérison bornée des hallucinations | **1,800 / 1,800 échecs de référence corrigés, 0 / 600 régressions** face à un modèle local 7B recevant les mêmes conversations sans gouvernance | ≥ 99.83% |
+| Rappel direct | 41 / 300 (13.7%) | **300 / 300** |
+| Ensembles et comptage | 98 / 300 (32.7%) | **300 / 300** |
+| Rappel borné dans le temps | 63 / 300 (21.0%) | **300 / 300** |
+| Mises à jour et conflits | 41 / 300 (13.7%) | **300 / 300** |
+| Jointures multi-sauts | 65 / 300 (21.7%) | **300 / 300** |
+| Pression de faux souvenirs | 45 / 300 (15.0%) | **300 / 300** |
+| Notes clé–valeur ouvertes | 34 / 300 (11.3%) | **300 / 300** |
+| Pression aux frontières * | 213 / 300 (71.0%) | **300 / 300** |
+| **Total** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, borne inférieure unilatérale à 95 % ≥ 99.87%)** |
+
+\* Les questions ordinaires de la famille « pression aux frontières » sont
+automatiquement créditées à la référence (le modèle est censé y répondre), ce qui
+explique la part plus élevée de sa référence.
 
 Les huit familles de tâches couvrent le rappel direct, les ensembles et le comptage,
 le rappel borné dans le temps, les mises à jour et les conflits, les jointures
 multi-sauts, la pression de faux souvenirs (où toute valeur livrée serait une
 fabrication), les notes clé–valeur ouvertes et la pression aux frontières (phrases
 narratives qui ne doivent pas être ingérées, questions ordinaires qui ne doivent pas
-être avalées). Sur les mêmes conversations, la référence locale 7B non gouvernée a
-fabriqué ou s'est trompée sur 75% des clusters ; la voie gouvernée les a tous corrigés,
-sans aucune régression sur les clusters que la référence avait réussis.
+être avalées). Comptabilité de la guérison : les 1,800 clusters que la référence a
+fabriqués ou sur lesquels elle s'est trompée ont tous été **corrigés** par la voie
+gouvernée, avec **zéro régression** sur les 600 que la référence avait réussis —
+guérison bornée 100% (borne inférieure unilatérale à 95 % ≥ 99.83%).
 
 **Portée, dite clairement :** il s'agit de résultats bornés portant sur le contrat de
 mémoire gouvernée d'Aethmere — sa grammaire de commandes explicite et ses familles de
@@ -200,7 +231,7 @@ Aethmere repose sur un modèle client public / cœur privé :
 
 Le contenu de ce dépôt et de ses artefacts de publication est propriétaire, sauf
 mention explicitement contraire dans un fichier. Aucune licence open source n'est
-accordée. Voir [NOTICE.md](NOTICE.md).
+accordée. Voir [NOTICE.md](../../NOTICE.md).
 
 ## Assistance
 
@@ -209,4 +240,4 @@ signalements publics de bogues et les demandes publiques de fonctionnalités. N'
 de passe, de clés d'API, de mémoires privées, de données personnelles ni de contenu de
 projet confidentiel.
 
-Pour les problèmes de sécurité, suivez [SECURITY.md](SECURITY.md).
+Pour les problèmes de sécurité, suivez [SECURITY.md](../../SECURITY.md).

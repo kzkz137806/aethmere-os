@@ -2,7 +2,7 @@
 
 > Repositori pengedaran awam — **ini bukan repositori sumber terbuka**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | **Bahasa Melayu** | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | **Bahasa Melayu** | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere ialah lapisan ingatan untuk kerja berbantukan AI yang menganggap **tidak
 mereka-reka** sebagai satu keperluan kejuruteraan, bukan slogan semata-mata. Ia
@@ -38,24 +38,51 @@ tidak dapat bersembunyi:
 
 ## Keputusan terukur (penilaian bermeterai, berbatas)
 
-Dalam satu penilaian dalaman bermeterai ke atas kontrak ingatan bertadbir — calon
-dibekukan mengikut cincangan sebelum benih rawak yang telah dikomitkan diambil, kes
-dijana secara deterministik, setiap jawapan dinilai oleh orakel mesin yang ditetapkan
-pada masa penjanaan, dan semua resit disimpan:
+**Apa yang diukur:** kontrak ingatan bertadbir Aethmere — tatabahasa arahan
+eksplisitnya dan lapan keluarga tugas pertanyaan — hujung ke hujung melalui
+perkhidmatan penyerapan dan pelepasan yang sebenar. Jawapan bertadbir dihasilkan
+oleh perkhidmatan deterministik, **bukan oleh model bahasa besar yang berimprovisasi**,
+jadi angka di bawah tidak bergantung pada model pembekal yang anda bawa.
 
-| Titik ukur | Keputusan | Batas bawah 95% |
+**Bagaimana ia diukur:** sistem calon dibekukan mengikut cincangan terlebih dahulu,
+dan barulah selepas itu benih rawak yang telah dikomitkan diambil; kes dijana secara
+deterministik, setiap jawapan dinilai oleh orakel mesin yang ditetapkan pada masa
+penjanaan, dan semua resit disimpan. Pemarkahan menuntut jawapan yang tepat bagi
+soalan yang boleh dijawab, penolakan bagi yang tidak boleh dijawab, dan penyaluran
+terus bagi yang biasa — setiap arah gagal secara berasingan, jadi ketepatan tidak
+sekali-kali boleh diperoleh melalui penolakan.
+
+**Apa yang dijadikan perbandingan:** "sebelum" = perbualan yang sama diberikan terus
+kepada qwen2.5:7b tempatan (Ollama, suhu 0, tanpa tadbir urus); "selepas" = lorong
+ingatan bertadbir. Pemarkahan garis dasar sengaja dibuat murah hati (balasan yang
+mengandungi nilai yang betul dikira betul, termasuk bentuk angka Cina), jadi angka
+pemulihan itu bersifat konservatif. Pencadang bagi lorong tangkapan bentuk bebas
+ialah model 7B tempatan yang sama, dengan sifar penghantaran keluar teks asal anda.
+
+| Keluarga tugas | Sebelum (7B, tanpa tadbir urus) | Selepas (lorong bertadbir) |
 |---|---|---|
-| Ketepatan berbatas | **2,400 / 2,400 kelompok betul** (8 keluarga tugas × 300, sifar toleransi bagi setiap keluarga) | ≥ 99.87% |
-| Pemulihan halusinasi berbatas | **1,800 / 1,800 kegagalan garis dasar dipulihkan, 0 / 600 regresi** berbanding model 7B tempatan yang diberi perbualan yang sama tanpa tadbir urus | ≥ 99.83% |
+| Ingatan langsung | 41 / 300 (13.7%) | **300 / 300** |
+| Set dan pengiraan | 98 / 300 (32.7%) | **300 / 300** |
+| Ingatan berskop masa | 63 / 300 (21.0%) | **300 / 300** |
+| Kemas kini dan percanggahan | 41 / 300 (13.7%) | **300 / 300** |
+| Cantuman berbilang lompatan | 65 / 300 (21.7%) | **300 / 300** |
+| Tekanan ingatan palsu | 45 / 300 (15.0%) | **300 / 300** |
+| Nota kunci–nilai terbuka | 34 / 300 (11.3%) | **300 / 300** |
+| Tekanan sempadan * | 213 / 300 (71.0%) | **300 / 300** |
+| **Jumlah** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, batas bawah satu hala 95% ≥ 99.87%)** |
+
+\* Soalan biasa dalam keluarga sempadan dikira betul secara automatik bagi garis
+dasar (model memang sepatutnya menjawabnya), sebab itulah bahagian garis dasarnya
+lebih tinggi.
 
 Lapan keluarga tugas itu merangkumi ingatan langsung, set dan pengiraan, ingatan
 berskop masa, kemas kini dan percanggahan, cantuman berbilang lompatan, tekanan
 ingatan palsu (di mana setiap nilai yang dilepaskan pasti merupakan rekaan), nota
 kunci–nilai terbuka, serta tekanan sempadan (ayat naratif yang tidak boleh diserap,
-dan soalan biasa yang tidak boleh ditelan). Atas perbualan yang sama, garis dasar
-model 7B tempatan tanpa tadbir urus mereka-reka atau tersilap pada 75% kelompok;
-lorong bertadbir memulihkan kesemuanya tanpa sebarang regresi pada kelompok yang
-dijawab betul oleh garis dasar.
+dan soalan biasa yang tidak boleh ditelan). Perakaunan pemulihan: kesemua 1,800
+kelompok yang direka-reka atau tersilap oleh garis dasar telah **dipulihkan** oleh
+lorong bertadbir, dengan **sifar regresi** pada 600 kelompok yang dijawab betul oleh
+garis dasar — pemulihan berbatas 100% (batas bawah satu hala 95% ≥ 99.83%).
 
 **Skop, dinyatakan secara terus terang:** ini ialah keputusan berbatas ke atas
 kontrak ingatan bertadbir Aethmere — tatabahasa arahan eksplisitnya dan keluarga
@@ -193,7 +220,7 @@ Aethmere menggunakan model klien-awam/teras-persendirian:
 
 Kandungan repositori ini dan aset keluarannya adalah proprietari melainkan sesuatu
 fail menyatakan sebaliknya secara jelas. Tiada lesen sumber terbuka diberikan. Lihat
-[NOTICE.md](NOTICE.md).
+[NOTICE.md](../../NOTICE.md).
 
 ## Sokongan
 
@@ -201,4 +228,4 @@ Gunakan [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) untuk
 laporan pepijat dan permintaan ciri secara awam. Jangan sertakan kata laluan, kunci
 API, ingatan peribadi, data peribadi, atau kandungan projek yang sulit.
 
-Untuk isu keselamatan, ikut [SECURITY.md](SECURITY.md).
+Untuk isu keselamatan, ikut [SECURITY.md](../../SECURITY.md).

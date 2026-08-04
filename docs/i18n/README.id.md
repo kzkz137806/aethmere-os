@@ -2,7 +2,7 @@
 
 > Repositori distribusi publik — **ini bukan repositori sumber terbuka**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | **Bahasa Indonesia** | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | **Bahasa Indonesia** | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere adalah lapisan memori untuk pekerjaan berbantuan AI yang memperlakukan
 **tidak mengarang** sebagai persyaratan rekayasa, bukan sekadar slogan. Aethmere
@@ -38,24 +38,50 @@ bisa bersembunyi:
 
 ## Hasil terukur (evaluasi tersegel dan berbatas)
 
-Dalam evaluasi internal tersegel atas kontrak memori terkelola — kandidat dibekukan
-berdasarkan hash sebelum benih acak yang sudah dikunci sebelumnya diambil, kasus dihasilkan
-secara deterministik, setiap jawaban dinilai oleh orakel mesin yang ditetapkan pada
-saat pembuatan, seluruh bukti disimpan:
+**Apa yang diukur:** kontrak memori terkelola Aethmere — tata bahasa perintah
+eksplisitnya dan delapan famili tugas kuerinya — diukur menyeluruh melalui layanan
+penyerapan dan pelepasan yang sebenarnya. Jawaban terkelola dihasilkan oleh layanan
+deterministik, **bukan oleh model bahasa besar yang berimprovisasi**, sehingga
+angka-angka di bawah ini tidak bergantung pada model penyedia mana yang Anda bawa.
 
-| Titik ukur | Hasil | Batas bawah 95% |
+**Bagaimana pengukurannya:** sistem kandidat dibekukan berdasarkan hash terlebih
+dahulu, dan baru setelah itu benih acak yang sudah dikunci sebelumnya diambil; kasus
+dihasilkan secara deterministik, setiap jawaban dinilai oleh orakel mesin yang
+ditetapkan pada saat pembuatan, dan seluruh bukti disimpan. Penilaian menuntut
+jawaban yang persis pada pertanyaan yang bisa dijawab, penolakan pada pertanyaan yang
+tidak bisa dijawab, dan penerusan pada pertanyaan biasa — masing-masing arah gagal
+secara terpisah, sehingga akurasi tidak pernah bisa diperoleh melalui penolakan.
+
+**Dibandingkan terhadap apa:** "sebelum" = percakapan yang sama diberikan langsung
+ke qwen2.5:7b lokal (Ollama, temperatur 0, tanpa tata kelola); "sesudah" = jalur
+memori terkelola. Penilaian baseline sengaja dibuat murah hati (balasan yang memuat
+nilai yang benar dihitung benar, termasuk bentuk angka dalam aksara Tionghoa),
+sehingga angka penyembuhan bersifat konservatif. Pengusul pada jalur penangkapan
+bentuk-bebas adalah model 7B lokal yang sama, tanpa satu pun keluaran teks asli Anda.
+
+| Famili tugas | Sebelum (7B, tanpa tata kelola) | Sesudah (jalur terkelola) |
 |---|---|---|
-| Kebenaran berbatas | **2,400 / 2,400 klaster benar** (8 famili tugas × 300, toleransi nol per famili) | ≥ 99.87% |
-| Penyembuhan halusinasi berbatas | **1,800 / 1,800 kegagalan baseline diperbaiki, 0 / 600 regresi** dibandingkan model 7B lokal yang diberi percakapan yang sama tanpa tata kelola | ≥ 99.83% |
+| Pengingatan kembali secara langsung | 41 / 300 (13.7%) | **300 / 300** |
+| Himpunan dan penghitungan | 98 / 300 (32.7%) | **300 / 300** |
+| Pengingatan kembali bercakupan waktu | 63 / 300 (21.0%) | **300 / 300** |
+| Pembaruan dan konflik | 41 / 300 (13.7%) | **300 / 300** |
+| Penggabungan multi-lompatan | 65 / 300 (21.7%) | **300 / 300** |
+| Tekanan memori palsu | 45 / 300 (15.0%) | **300 / 300** |
+| Catatan kunci–nilai terbuka | 34 / 300 (11.3%) | **300 / 300** |
+| Tekanan batas * | 213 / 300 (71.0%) | **300 / 300** |
+| **Total** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, batas bawah satu sisi 95% ≥ 99.87%)** |
+
+\* Pertanyaan biasa dalam famili tekanan batas otomatis dikreditkan kepada baseline
+(model memang seharusnya menjawabnya), itulah sebabnya porsi baseline-nya lebih tinggi.
 
 Kedelapan famili tugas mencakup pengingatan kembali secara langsung, himpunan dan
 penghitungan, pengingatan kembali bercakupan waktu, pembaruan dan konflik, penggabungan multi-lompatan,
 tekanan memori palsu (di mana setiap nilai yang dikeluarkan akan menjadi karangan),
 catatan kunci–nilai terbuka, serta tekanan batas (kalimat naratif yang tidak boleh
-diserap, dan pertanyaan biasa yang tidak boleh ditelan). Pada percakapan yang sama,
-baseline 7B lokal tanpa tata kelola mengarang atau keliru pada 75% klaster; jalur
-terkelola memperbaiki semuanya tanpa satu pun regresi pada klaster yang dijawab benar
-oleh baseline.
+diserap, dan pertanyaan biasa yang tidak boleh ditelan). Perhitungan penyembuhan:
+seluruh 1,800 klaster yang dikarang atau dijawab keliru oleh baseline **diperbaiki**
+oleh jalur terkelola, dengan **nol regresi** pada 600 klaster yang dijawab benar oleh
+baseline — penyembuhan berbatas 100% (batas bawah satu sisi 95% ≥ 99.83%).
 
 **Cakupan, dinyatakan terus terang:** ini adalah hasil berbatas pada kontrak memori
 terkelola Aethmere — tata bahasa perintah eksplisitnya dan famili kuerinya — diukur
@@ -193,7 +219,7 @@ Aethmere menggunakan model klien-publik/inti-privat:
 
 Isi repositori ini dan aset rilisnya bersifat berhak milik kecuali sebuah berkas
 menyatakan lain secara eksplisit. Tidak ada lisensi sumber terbuka yang diberikan.
-Lihat [NOTICE.md](NOTICE.md).
+Lihat [NOTICE.md](../../NOTICE.md).
 
 ## Dukungan
 
@@ -201,4 +227,4 @@ Gunakan [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) untuk
 laporan bug dan permintaan fitur yang bersifat publik. Jangan sertakan kata sandi,
 kunci API, memori pribadi, data pribadi, atau konten proyek yang bersifat rahasia.
 
-Untuk masalah keamanan, ikuti [SECURITY.md](SECURITY.md).
+Untuk masalah keamanan, ikuti [SECURITY.md](../../SECURITY.md).

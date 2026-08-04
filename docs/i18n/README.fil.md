@@ -2,7 +2,7 @@
 
 > Pampublikong repositoryo ng distribusyon — **hindi ito open-source na repositoryo**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | **Filipino** | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | **Filipino** | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Ang Aethmere ay isang memory layer para sa gawaing tinutulungan ng AI, na itinuturing
 ang **hindi pag-imbento** bilang isang kinakailangan sa inhinyeriya, hindi isang islogan.
@@ -37,24 +37,53 @@ ay ginawa upang walang mapagtaguan ang alinman sa dalawang direksyong ito:
 
 ## Nasukat na resulta (selyado at may-hangganang ebalwasyon)
 
-Sa isang selyadong panloob na ebalwasyon ng pinamamahalaang kontrata ng memorya — ang
-kandidato ay ni-freeze sa pamamagitan ng hash bago hinugot ang naipangakong random seed,
-determinadong nabuo ang mga kaso, bawat sagot ay iniskor ng isang machine oracle na
-nakatakda na noong panahon ng pagbuo, at ang lahat ng resibo ay itinago:
+**Ano ang sinukat:** ang pinamamahalaang kontrata ng memorya ng Aethmere — ang hayagang
+gramatika ng utos nito at ang walong pamilya ng gawain sa query — mula dulo hanggang dulo
+sa tunay na mga serbisyo ng pag-ingest at paglalabas. Ang mga pinamamahalaang sagot ay
+ginagawa ng determinadong mga serbisyo, **hindi ng isang malaking modelo ng wika na
+nag-iimprobisa**, kaya ang mga numero sa ibaba ay hindi nakadepende kung anong modelo ng
+provider ang dala mo.
 
-| Endpoint | Resulta | 95% lower bound |
+**Paano ito sinukat:** ang kandidatong sistema ay ni-freeze muna sa pamamagitan ng hash,
+at saka pa lamang hinugot ang naipangakong random seed; determinadong nabuo ang mga kaso,
+bawat sagot ay iniskor ng isang machine oracle na nakatakda na noong panahon ng pagbuo, at
+itinago ang lahat ng resibo. Hinihingi ng pag-iskor ang eksaktong sagot sa mga masasagot na
+tanong, pagtanggi sa mga hindi masasagot, at pagpapadaan sa mga ordinaryo — bawat direksyon
+ay bumabagsak nang hiwalay, kaya hindi kailanman makukuha ang katumpakan sa pamamagitan ng
+pagtanggi.
+
+**Laban sa ano ito inihambing:** ang "bago" = ang parehong mga usapan na ibinigay nang
+tuwiran sa isang lokal na qwen2.5:7b (Ollama, temperatura 0, walang pamamahala); ang
+"pagkatapos" = ang pinamamahalaang memory lane. Sadyang mapagbigay ang pag-iskor sa
+baseline (ang tugong naglalaman ng tamang halaga ay binibilang na tama, kabilang ang mga
+anyong numeral na Tsino), kaya konserbatibo ang mga numero ng lunas. Ang proposer ng
+malayang lane ng pagkuha ay ang parehong lokal na 7B, nang walang anumang paglabas ng
+orihinal mong teksto.
+
+| Pamilya ng gawain | Bago (7B, walang pamamahala) | Pagkatapos (pinamamahalaang lane) |
 |---|---|---|
-| May-hangganang katumpakan | **2,400 / 2,400 na kumpol ang tama** (8 pamilya ng gawain × 300, zero tolerance kada pamilya) | ≥ 99.87% |
-| May-hangganang lunas sa halusinasyon | **1,800 / 1,800 na pagkakamali ng baseline ang naayos, 0 / 600 na regresyon** laban sa isang lokal na 7B na modelo na binigyan ng parehong mga usapan nang walang pamamahala | ≥ 99.83% |
+| Tuwirang paggunita | 41 / 300 (13.7%) | **300 / 300** |
+| Mga set at pagbibilang | 98 / 300 (32.7%) | **300 / 300** |
+| Paggunita ayon sa panahon | 63 / 300 (21.0%) | **300 / 300** |
+| Mga pag-update at salungatan | 41 / 300 (13.7%) | **300 / 300** |
+| Multi-hop na pag-uugnay | 65 / 300 (21.7%) | **300 / 300** |
+| Presyur ng maling alaala | 45 / 300 (15.0%) | **300 / 300** |
+| Bukas na key–value na tala | 34 / 300 (11.3%) | **300 / 300** |
+| Presyur sa hangganan * | 213 / 300 (71.0%) | **300 / 300** |
+| **Kabuuan** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, 95% one-sided lower bound ≥ 99.87%)** |
+
+\* Ang mga ordinaryong tanong sa pamilya ng hangganan ay awtomatikong ibinibilang na tama
+para sa baseline (dapat naman talagang sagutin ito ng modelo), kaya mas mataas ang bahagi
+nito sa baseline.
 
 Sinasaklaw ng walong pamilya ng gawain ang tuwirang paggunita, mga set at pagbibilang,
 paggunita ayon sa panahon, mga pag-update at salungatan, multi-hop na pag-uugnay, presyur
 ng maling alaala (kung saan anumang inilabas na halaga ay magiging imbento), bukas na
 key–value na tala, at presyur sa hangganan (mga pangungusap na salaysay na hindi dapat
-maisama, at mga ordinaryong tanong na hindi dapat lunukin). Sa parehong mga usapan, ang
-hindi pinamamahalaang lokal na 7B na baseline ay nag-imbento o nagkamali sa 75% ng mga
-kumpol; naayos ng pinamamahalaang lane ang lahat ng ito nang walang anumang regresyon
-sa mga kumpol na tama nang nasagot ng baseline.
+maisama, at mga ordinaryong tanong na hindi dapat lunukin). Pagtutuos ng lunas: lahat ng
+1,800 na kumpol na inimbento o nakamalian ng baseline ay **naayos** ng pinamamahalaang
+lane, na may **zero na regresyon** sa 600 na tama nang nasagot ng baseline — may-hangganang
+lunas na 100% (95% one-sided lower bound ≥ 99.83%).
 
 **Saklaw, malinaw na sinasabi:** ito ay mga may-hangganang resulta sa loob ng
 pinamamahalaang kontrata ng memorya ng Aethmere — ang hayagang gramatika ng utos nito at
@@ -197,7 +226,7 @@ Gumagamit ang Aethmere ng modelong pampublikong-kliyente/pribadong-core:
 
 Ang mga nilalaman ng repositoryong ito at ng mga release asset nito ay proprietary maliban
 kung hayagang nakasaad ang iba sa isang file. Walang ipinagkakaloob na open-source na lisensya.
-Tingnan ang [NOTICE.md](NOTICE.md).
+Tingnan ang [NOTICE.md](../../NOTICE.md).
 
 ## Suporta
 
@@ -205,4 +234,4 @@ Gamitin ang [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) pa
 pampublikong pag-uulat ng bug at mga kahilingan sa tampok. Huwag maglakip ng mga password,
 API key, pribadong alaala, personal na datos, o kumpidensyal na nilalaman ng proyekto.
 
-Para sa mga isyu sa seguridad, sundin ang [SECURITY.md](SECURITY.md).
+Para sa mga isyu sa seguridad, sundin ang [SECURITY.md](../../SECURITY.md).

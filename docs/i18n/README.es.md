@@ -2,7 +2,7 @@
 
 > Repositorio de distribución pública — **este no es un repositorio de código abierto**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | **Español** | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | **Español** | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere es una capa de memoria para el trabajo asistido por IA que trata el hecho de
 **no inventar** como un requisito de ingeniería, no como un eslogan. Ofrece a los clientes
@@ -38,23 +38,51 @@ direcciones pueda esconderse:
 
 ## Resultados medidos (evaluación sellada y acotada)
 
-En una evaluación interna sellada del contrato de memoria gobernada — con el candidato
-congelado por hash antes de extraer una semilla aleatoria fijada mediante compromiso
-previo, casos generados de forma determinista, cada respuesta puntuada por un oráculo
-automático fijado en el momento de la generación y todos los comprobantes conservados:
+**Qué se midió:** el contrato de memoria gobernada de Aethmere —su gramática explícita de
+comandos y sus ocho familias de tareas de consulta— de extremo a extremo a través de los
+servicios reales de ingesta y de entrega. Las respuestas gobernadas las producen servicios
+deterministas, **no un modelo de lenguaje grande improvisando**, por lo que las cifras de
+abajo no dependen de qué modelo de proveedor uses.
 
-| Métrica | Resultado | Cota inferior del 95 % |
+**Cómo se midió:** primero se congeló por hash el sistema candidato y solo después se
+extrajo una semilla aleatoria fijada mediante compromiso previo; los casos se generaron de
+forma determinista, cada respuesta se puntuó con un oráculo automático fijado en el momento
+de la generación y se conservaron todos los comprobantes. La puntuación exige respuestas
+exactas en las preguntas respondibles, rechazo en las no respondibles y paso directo en las
+ordinarias: cada dirección falla por separado, así que la precisión nunca se puede obtener
+a base de rechazos.
+
+**Con qué se comparó:** el «antes» = las mismas conversaciones entregadas directamente a un
+qwen2.5:7b local (Ollama, temperatura 0, sin gobernanza); el «después» = el carril de
+memoria gobernada. La puntuación de la línea base es deliberadamente generosa (una respuesta
+que contenga el valor correcto cuenta como correcta, incluidas las formas numéricas chinas),
+de modo que las cifras de cura son conservadoras. El proponente del carril de captura de
+texto libre es el mismo 7B local, sin que tu texto original salga nunca del dispositivo.
+
+| Familia de tareas | Antes (7B, sin gobernanza) | Después (carril gobernado) |
 |---|---|---|
-| Corrección acotada | **2.400 / 2.400 clústeres correctos** (8 familias de tareas × 300, tolerancia cero por familia) | ≥ 99.87% |
-| Cura acotada de alucinaciones | **1.800 / 1.800 fallos de línea base reparados, 0 / 600 regresiones** frente a un modelo local de 7B con las mismas conversaciones y sin gobernanza | ≥ 99.83% |
+| Recuerdo directo | 41 / 300 (13.7%) | **300 / 300** |
+| Conjuntos y conteo | 98 / 300 (32.7%) | **300 / 300** |
+| Recuerdo acotado en el tiempo | 63 / 300 (21.0%) | **300 / 300** |
+| Actualizaciones y conflictos | 41 / 300 (13.7%) | **300 / 300** |
+| Uniones multisalto | 65 / 300 (21.7%) | **300 / 300** |
+| Presión de falsos recuerdos | 45 / 300 (15.0%) | **300 / 300** |
+| Notas abiertas de clave-valor | 34 / 300 (11.3%) | **300 / 300** |
+| Presión de frontera * | 213 / 300 (71.0%) | **300 / 300** |
+| **Total** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, cota inferior unilateral del 95% ≥ 99.87%)** |
+
+\* Las preguntas ordinarias de la familia de frontera se acreditan automáticamente a la
+línea base (se supone que el modelo debe responderlas), y por eso su cuota de línea base
+es más alta.
 
 Las ocho familias de tareas cubren recuerdo directo, conjuntos y conteo, recuerdo acotado
 en el tiempo, actualizaciones y conflictos, uniones multisalto, presión de falsos recuerdos
 (donde cualquier valor entregado sería una fabricación), notas abiertas de clave-valor y
 presión de frontera (frases narrativas que no deben ingerirse y preguntas ordinarias que no
-deben tragarse). Sobre las mismas conversaciones, la línea base local de 7B sin gobernanza
-fabricó o erró en el 75% de los clústeres; el carril gobernado los reparó todos, con cero
-regresiones en los clústeres que la línea base había acertado.
+deben tragarse). Contabilidad de la cura: los 1,800 clústeres en los que la línea base
+fabricó o erró fueron **reparados** por el carril gobernado, con **cero regresiones** en los
+600 que la línea base había acertado: cura acotada del 100% (cota inferior unilateral del
+95% ≥ 99.83%).
 
 **Alcance, dicho con claridad:** estos son resultados acotados sobre el contrato de memoria
 gobernada de Aethmere —su gramática explícita de comandos y sus familias de consultas—,
@@ -196,7 +224,7 @@ Aethmere utiliza un modelo de cliente público / núcleo privado:
 
 El contenido de este repositorio y de sus artefactos de publicación es propietario, salvo
 que un archivo indique explícitamente lo contrario. No se concede ninguna licencia de código
-abierto. Consulta [NOTICE.md](NOTICE.md).
+abierto. Consulta [NOTICE.md](../../NOTICE.md).
 
 ## Soporte
 
@@ -204,4 +232,4 @@ Usa [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) para repor
 de errores y solicitudes de funciones. No incluyas contraseñas, claves de API, memorias
 privadas, datos personales ni contenido confidencial de proyectos.
 
-Para problemas de seguridad, sigue [SECURITY.md](SECURITY.md).
+Para problemas de seguridad, sigue [SECURITY.md](../../SECURITY.md).

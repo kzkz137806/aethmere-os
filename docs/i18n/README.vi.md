@@ -2,7 +2,7 @@
 
 > Kho phân phối công khai — **đây không phải là kho mã nguồn mở**.
 
-[English](../../README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | **Tiếng Việt** | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+[简体中文](../../README.md) | [English](README.en.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [ไทย](README.th.md) | **Tiếng Việt** | [Bahasa Indonesia](README.id.md) | [Bahasa Melayu](README.ms.md) | [Filipino](README.fil.md) | [Español](README.es.md) | [Português](README.pt.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 
 Aethmere là một lớp bộ nhớ dành cho công việc có AI hỗ trợ, xem **không bịa đặt**
 là một yêu cầu kỹ thuật chứ không phải một khẩu hiệu. Nó mang lại cho các ứng dụng
@@ -37,24 +37,50 @@ sao cho không hướng nào có thể ẩn mình:
 
 ## Kết quả đo được (đánh giá niêm phong, có giới hạn phạm vi)
 
-Trong một đánh giá nội bộ được niêm phong đối với hợp đồng bộ nhớ được quản trị —
-hệ thống ứng viên được đóng băng bằng hàm băm trước khi rút ra hạt giống ngẫu nhiên
-đã cam kết, các ca kiểm thử được sinh ra một cách tất định, mọi câu trả lời được chấm
-bởi một bộ phán định máy cố định ngay tại thời điểm sinh đề, toàn bộ biên nhận được
-lưu giữ:
+**Cái gì được đo:** hợp đồng bộ nhớ được quản trị của Aethmere — ngữ pháp lệnh tường
+minh và tám họ nhiệm vụ truy vấn của nó — đo đầu-cuối xuyên qua các dịch vụ thực tế
+nạp vào và đưa ra giá trị. Các câu trả lời trong làn được quản trị do các dịch vụ tất
+định sinh ra, **chứ không phải do một mô hình ngôn ngữ lớn ứng biến**, nên những con
+số dưới đây không phụ thuộc vào việc bạn mang mô hình của nhà cung cấp nào tới.
 
-| Chỉ số | Kết quả | Cận dưới 95% |
+**Đo như thế nào:** hệ thống ứng viên được đóng băng bằng hàm băm trước, và chỉ sau
+đó hạt giống ngẫu nhiên đã cam kết trước mới được rút ra; các ca kiểm thử được sinh
+ra một cách tất định, mọi câu trả lời được chấm bởi một bộ phán định máy cố định ngay
+tại thời điểm sinh đề, và toàn bộ biên nhận được lưu giữ. Cách chấm đòi hỏi trả lời
+chính xác với câu hỏi trả lời được, từ chối với câu hỏi không trả lời được, và cho đi
+qua với câu hỏi thông thường — mỗi hướng thất bại một cách riêng biệt, nên độ chính
+xác không bao giờ có thể giành được bằng cách từ chối.
+
+**So sánh với cái gì:** "trước" = chính những cuộc hội thoại đó được đưa thẳng cho một
+qwen2.5:7b chạy cục bộ (Ollama, nhiệt độ 0, không có quản trị); "sau" = làn bộ nhớ
+được quản trị. Cách chấm đường cơ sở được đặt rộng rãi một cách có chủ ý (một câu trả
+lời có chứa giá trị đúng thì được tính là đúng, kể cả dạng chữ số viết bằng tiếng
+Trung), nên các con số về chữa lỗi là bảo thủ. Bộ đề cử của làn thu nhận câu tự do
+cũng chính là mô hình 7B cục bộ đó, và không có bất kỳ dữ liệu gốc nào của bạn rời
+khỏi máy.
+
+| Họ nhiệm vụ | Trước (7B, không quản trị) | Sau (làn được quản trị) |
 |---|---|---|
-| Độ chính xác có giới hạn | **2,400 / 2,400 cụm đúng** (8 họ nhiệm vụ × 300, không dung sai cho mỗi họ) | ≥ 99.87% |
-| Chữa ảo giác có giới hạn | **1,800 / 1,800 lỗi của đường cơ sở được sửa, 0 / 600 hồi quy** so với một mô hình 7B chạy cục bộ nhận cùng các cuộc hội thoại nhưng không có quản trị | ≥ 99.83% |
+| Hồi tưởng trực tiếp | 41 / 300 (13.7%) | **300 / 300** |
+| Tập hợp và đếm | 98 / 300 (32.7%) | **300 / 300** |
+| Hồi tưởng theo phạm vi thời gian | 63 / 300 (21.0%) | **300 / 300** |
+| Cập nhật và xung đột | 41 / 300 (13.7%) | **300 / 300** |
+| Nối nhiều bước | 65 / 300 (21.7%) | **300 / 300** |
+| Áp lực ký ức giả | 45 / 300 (15.0%) | **300 / 300** |
+| Ghi chú khóa–giá trị mở | 34 / 300 (11.3%) | **300 / 300** |
+| Áp lực ranh giới * | 213 / 300 (71.0%) | **300 / 300** |
+| **Tổng cộng** | **600 / 2,400 (25.0%)** | **2,400 / 2,400 (100%, cận dưới một phía 95% ≥ 99.87%)** |
+
+\* Các câu hỏi thông thường trong họ ranh giới được tự động tính điểm cho đường cơ sở
+(mô hình lẽ ra phải trả lời chúng), đó là lý do phần điểm đường cơ sở của họ này cao hơn.
 
 Tám họ nhiệm vụ bao phủ: hồi tưởng trực tiếp, tập hợp và đếm, hồi tưởng theo phạm vi
 thời gian, cập nhật và xung đột, nối nhiều bước, áp lực ký ức giả (nơi mọi giá trị
 được đưa ra đều sẽ là bịa đặt), ghi chú khóa–giá trị mở, và áp lực ranh giới (những
 câu trần thuật không được phép nạp vào, và những câu hỏi thông thường không được phép
-bị nuốt). Trên cùng những cuộc hội thoại đó, đường cơ sở 7B cục bộ không có quản trị
-đã bịa đặt hoặc trả lời sai ở 75% số cụm; làn được quản trị đã sửa toàn bộ, không có hồi quy
-nào trên những cụm mà đường cơ sở trả lời đúng.
+bị nuốt). Hạch toán chữa lỗi: toàn bộ 1,800 cụm mà đường cơ sở bịa đặt hoặc trả lời
+sai đều đã được **sửa** bởi làn được quản trị, với **0 hồi quy** trên 600 cụm mà đường
+cơ sở trả lời đúng — chữa có giới hạn 100% (cận dưới một phía 95% ≥ 99.83%).
 
 **Phạm vi, nói thẳng:** đây là những kết quả có giới hạn trên hợp đồng bộ nhớ được
 quản trị của Aethmere — tức ngữ pháp lệnh tường minh và các họ truy vấn của nó — được
@@ -193,7 +219,7 @@ Aethmere sử dụng mô hình ứng dụng công khai/lõi riêng tư:
 
 Nội dung của kho này và các sản phẩm phát hành kèm theo là tài sản độc quyền, trừ khi
 một tệp nêu rõ điều khác. Không có giấy phép mã nguồn mở nào được cấp. Xem
-[NOTICE.md](NOTICE.md).
+[NOTICE.md](../../NOTICE.md).
 
 ## Hỗ trợ
 
@@ -201,4 +227,4 @@ Hãy dùng [GitHub Issues](https://github.com/kzkz137806/aethmere-os/issues) cho
 cáo lỗi và đề xuất tính năng công khai. Đừng đưa vào mật khẩu, khóa API, ký ức riêng
 tư, dữ liệu cá nhân hay nội dung dự án bảo mật.
 
-Với các vấn đề bảo mật, hãy làm theo [SECURITY.md](SECURITY.md).
+Với các vấn đề bảo mật, hãy làm theo [SECURITY.md](../../SECURITY.md).
