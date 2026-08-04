@@ -90,13 +90,23 @@ model limitations apply.
 
 - Explicit memory commands with exact, auditable semantics: record, update, retract,
   locate, and open key–value notes; multi-value sets; time-scoped recall.
-- Signed memory lineage: every accepted fact carries a verifiable chain from the
-  original message; retracted values never surface again through any query.
+- Every memory is auditable and traceable back to your own words; retracted values
+  never surface again through any query.
 - Confirm-before-write: new memory commands require your explicit confirmation
   in the product before anything is stored.
-- Free-form capture with local verification: natural sentences can propose memory
-  candidates via a local model and are deterministically re-verified before
-  acceptance — with zero egress of your original text.
+- Natural sentences can become memories too: before anything is stored the system
+  independently checks it and only accepts content that matches your original
+  wording — with zero egress of your original text.
+
+**Skills hub and knowledge base**
+
+- Server-side skills hub: available the moment you log in — a growing library of
+  domain capability cards is routed to your question automatically, with no manual
+  wiring.
+- Personal knowledge base: your uploaded documents become account-isolated,
+  searchable private corpus, recalled on demand at answer time.
+- Personal cloud-memory recall: across sessions and devices, injecting only
+  bounded, relevant fragments for the question at hand.
 
 **Personal cloud memory**
 

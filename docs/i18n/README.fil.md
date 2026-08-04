@@ -100,15 +100,24 @@ at umiiral ang karaniwang mga limitasyon ng modelo.
 - Hayagang mga utos sa memorya na may eksakto at naa-audit na semantika: pagtatala,
   pag-update, pagbawi, paghanap, at bukas na key–value na tala; multi-value na set;
   paggunita ayon sa panahon.
-- Nilagdaang lineage ng memorya: bawat tinanggap na katotohanan ay may dalang mabe-verify
-  na kadena pabalik sa orihinal na mensahe; ang mga binawing halaga ay hindi na muling
-  lilitaw sa anumang query.
+- Bawat alaala ay naa-audit at masusubaybayan pabalik sa sarili mong mga salita; ang mga
+  binawing halaga ay hindi na muling lilitaw sa anumang query.
 - Kumpirmahin-bago-isulat: ang mga bagong utos sa memorya ay nangangailangan ng hayagan
   mong kumpirmasyon sa produkto bago maimbak ang anuman.
-- Malayang pagkuha na may lokal na pagpapatunay: ang mga natural na pangungusap ay maaaring
-  magmungkahi ng mga kandidato sa memorya sa pamamagitan ng isang lokal na modelo at
-  determinadong sinusuri muli bago tanggapin — nang walang anumang paglabas ng orihinal
-  mong teksto.
+- Maaari ding maging alaala ang mga natural na pangungusap: bago maimbak ang anuman,
+  malaya itong sinusuri ng sistema at tinatanggap lamang ang nilalamang tumutugma sa
+  orihinal mong pananalita — nang walang anumang paglabas ng orihinal mong teksto.
+
+**Skills hub at knowledge base**
+
+- Skills hub sa panig ng server: available sa oras na mag-login ka — isang lumalagong
+  aklatan ng mga capability card ayon sa larangan ang awtomatikong iniruruta sa tanong mo,
+  nang walang manwal na pag-wire.
+- Personal na knowledge base: ang mga dokumentong ina-upload mo ay nagiging masasaliksik
+  na pribadong corpus na hiwalay ayon sa account, na ginugunita kapag kailangan sa oras ng
+  pagsagot.
+- Paggunita ng personal na cloud memory: sa iba't ibang session at device, naglalagay
+  lamang ng may-hangganan at kaugnay na mga fragment para sa kasalukuyang tanong.
 
 **Personal na cloud memory**
 

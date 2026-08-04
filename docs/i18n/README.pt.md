@@ -100,14 +100,24 @@ limitações usuais de modelos continuam valendo.
 - Comandos de memória explícitos com semântica exata e auditável: registrar,
   atualizar, revogar, localizar e notas abertas de chave–valor; conjuntos
   multivalorados; recuperação delimitada no tempo.
-- Linhagem de memória assinada: todo fato aceito carrega uma cadeia verificável a
-  partir da mensagem original; valores revogados nunca reaparecem em nenhuma
-  consulta.
+- Toda memória é auditável e rastreável até as suas próprias palavras; valores
+  revogados nunca reaparecem em nenhuma consulta.
 - Confirmar antes de gravar: novos comandos de memória exigem sua confirmação
   explícita no produto antes que qualquer coisa seja armazenada.
-- Captura em texto livre com verificação local: frases naturais podem propor
-  candidatos a memória por meio de um modelo local e são reverificadas de forma
-  determinística antes da aceitação — com zero saída do seu texto original.
+- Frases naturais também podem virar memórias: antes de qualquer coisa ser
+  armazenada, o sistema verifica de forma independente e só aceita conteúdo que
+  corresponda à sua formulação original — com zero saída do seu texto original.
+
+**Hub de habilidades e base de conhecimento**
+
+- Hub de habilidades no servidor: disponível assim que você faz login — uma
+  biblioteca crescente de cartões de capacidade por domínio é roteada
+  automaticamente para a sua pergunta, sem nenhuma configuração manual.
+- Base de conhecimento pessoal: os documentos que você envia se tornam um corpus
+  privado pesquisável e isolado por conta, recuperado sob demanda no momento da
+  resposta.
+- Recuperação de memória pessoal na nuvem: entre sessões e dispositivos, injetando
+  apenas fragmentos limitados e relevantes para a pergunta em questão.
 
 **Memória pessoal na nuvem**
 

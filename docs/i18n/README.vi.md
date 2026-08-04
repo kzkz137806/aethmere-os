@@ -97,14 +97,23 @@ hạn thông thường của mô hình vẫn hiện diện.
 - Các lệnh ghi nhớ tường minh với ngữ nghĩa chính xác, có thể kiểm toán: ghi lại,
   cập nhật, thu hồi, định vị, và ghi chú khóa–giá trị mở; tập hợp nhiều giá trị;
   hồi tưởng theo phạm vi thời gian.
-- Chuỗi nguồn gốc bộ nhớ có ký số: mỗi dữ kiện được chấp nhận đều mang một chuỗi có
-  thể kiểm chứng truy ngược về tin nhắn gốc; giá trị đã thu hồi không bao giờ xuất
-  hiện lại qua bất kỳ truy vấn nào.
+- Mọi ký ức đều có thể kiểm toán và truy ngược về chính lời bạn nói; giá trị đã thu
+  hồi không bao giờ xuất hiện lại qua bất kỳ truy vấn nào.
 - Xác nhận trước khi ghi: các lệnh ghi nhớ mới cần bạn xác nhận tường minh trong sản
   phẩm trước khi bất cứ điều gì được lưu lại.
-- Thu nhận câu tự do kèm kiểm chứng cục bộ: các câu tự nhiên có thể đề cử ứng viên bộ
-  nhớ thông qua một mô hình cục bộ và được kiểm chứng lại một cách tất định trước khi
-  được chấp nhận — và không có bất kỳ dữ liệu gốc nào của bạn rời khỏi máy.
+- Các câu tự nhiên cũng có thể trở thành ký ức: trước khi bất cứ điều gì được lưu
+  lại, hệ thống tự kiểm tra một cách độc lập và chỉ chấp nhận nội dung khớp với cách
+  diễn đạt gốc của bạn — và không có bất kỳ dữ liệu gốc nào của bạn rời khỏi máy.
+
+**Kho kỹ năng và cơ sở tri thức**
+
+- Kho kỹ năng phía máy chủ: sẵn sàng ngay khi bạn đăng nhập — một thư viện ngày càng
+  mở rộng gồm các thẻ năng lực theo lĩnh vực được tự động định tuyến tới câu hỏi của
+  bạn, không cần đấu nối thủ công.
+- Cơ sở tri thức cá nhân: các tài liệu bạn tải lên trở thành một kho ngữ liệu riêng
+  tư, cô lập theo tài khoản và có thể tìm kiếm, được gọi lại khi cần lúc trả lời.
+- Hồi tưởng bộ nhớ đám mây cá nhân: xuyên các phiên và các thiết bị, chỉ chèn những
+  mảnh liên quan và có giới hạn cho đúng câu hỏi đang được hỏi.
 
 **Bộ nhớ đám mây cá nhân**
 

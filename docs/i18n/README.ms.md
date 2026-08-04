@@ -99,14 +99,25 @@ model tetap terpakai.
 - Arahan ingatan eksplisit dengan semantik yang tepat dan boleh diaudit: rekod,
   kemas kini, tarik balik, cari, dan nota kunci–nilai terbuka; set berbilang nilai;
   ingatan berskop masa.
-- Silsilah ingatan bertandatangan: setiap fakta yang diterima membawa rantaian
-  yang boleh disahkan sehingga ke mesej asal; nilai yang ditarik balik tidak akan muncul
-  semula melalui mana-mana pertanyaan.
+- Setiap ingatan boleh diaudit dan boleh dijejaki kembali kepada kata-kata anda
+  sendiri; nilai yang ditarik balik tidak akan muncul semula melalui mana-mana
+  pertanyaan.
 - Sahkan-sebelum-tulis: arahan ingatan baharu memerlukan pengesahan jelas daripada
   anda di dalam produk sebelum apa-apa disimpan.
-- Tangkapan bentuk bebas dengan pengesahan tempatan: ayat biasa boleh
-  mencadangkan calon ingatan melalui model tempatan dan disahkan semula secara
-  deterministik sebelum diterima — dengan sifar penghantaran keluar teks asal anda.
+- Ayat biasa juga boleh menjadi ingatan: sebelum apa-apa disimpan, sistem
+  memeriksanya secara bebas dan hanya menerima kandungan yang sepadan dengan
+  perkataan asal anda — dengan sifar penghantaran keluar teks asal anda.
+
+**Hab kemahiran dan pangkalan pengetahuan**
+
+- Hab kemahiran di pihak pelayan: tersedia sebaik sahaja anda log masuk — pustaka
+  kad keupayaan domain yang kian berkembang dihalakan kepada soalan anda secara
+  automatik, tanpa pendawaian manual.
+- Pangkalan pengetahuan peribadi: dokumen yang anda muat naik menjadi korpus
+  peribadi yang boleh dicari dan terasing mengikut akaun, dipanggil semula apabila
+  diperlukan pada masa menjawab.
+- Ingatan awan peribadi: dipanggil semula merentas sesi dan peranti, hanya
+  menyuntik serpihan berkaitan yang berbatas bagi soalan yang sedang dihadapi.
 
 **Ingatan awan peribadi**
 

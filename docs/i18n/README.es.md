@@ -100,13 +100,23 @@ normales de los modelos.
 - Comandos de memoria explícitos con semántica exacta y auditable: registrar, actualizar,
   retirar, localizar y notas abiertas de clave-valor; conjuntos multivalor; recuerdo
   acotado en el tiempo.
-- Linaje de memoria firmado: cada hecho aceptado lleva una cadena verificable hasta el
-  mensaje original; los valores retirados no vuelven a aparecer en ninguna consulta.
+- Cada memoria es auditable y rastreable hasta tus propias palabras; los valores retirados
+  no vuelven a aparecer en ninguna consulta.
 - Confirmación antes de escribir: los nuevos comandos de memoria requieren tu confirmación
   explícita en el producto antes de almacenar nada.
-- Captura de texto libre con verificación local: las frases naturales pueden proponer
-  candidatos de memoria mediante un modelo local y se vuelven a verificar de forma
-  determinista antes de aceptarse, sin que tu texto original salga nunca del dispositivo.
+- Las frases naturales también pueden convertirse en memorias: antes de almacenar nada, el
+  sistema lo comprueba de forma independiente y solo acepta contenido que coincida con tu
+  redacción original, sin que tu texto original salga nunca del dispositivo.
+
+**Centro de habilidades y base de conocimiento**
+
+- Centro de habilidades en el servidor: disponible desde el momento en que inicias sesión;
+  una biblioteca creciente de tarjetas de capacidades de dominio se enruta automáticamente
+  a tu pregunta, sin cableado manual.
+- Base de conocimiento personal: los documentos que subes se convierten en un corpus
+  privado, aislado por cuenta y consultable, recuperado bajo demanda al responder.
+- Recuerdo de memoria personal en la nube: entre sesiones y dispositivos, inyectando solo
+  fragmentos acotados y relevantes para la pregunta en cuestión.
 
 **Memoria personal en la nube**
 

@@ -101,14 +101,23 @@ unverändert.
 - Explizite Gedächtnisbefehle mit exakter, prüfbarer Semantik: erfassen, aktualisieren,
   zurückziehen, auffinden und offene Schlüssel-Wert-Notizen; Mehrwert-Mengen; zeitlich
   eingegrenzte Erinnerung.
-- Signierte Gedächtnisherkunft: Jeder akzeptierte Fakt trägt eine überprüfbare Kette
-  zurück bis zur ursprünglichen Nachricht; zurückgezogene Werte tauchen über keine
-  Abfrage je wieder auf.
+- Jede Erinnerung ist prüfbar und bis auf Ihre eigenen Worte zurückverfolgbar;
+  zurückgezogene Werte tauchen über keine Abfrage je wieder auf.
 - Bestätigung vor dem Schreiben: Neue Gedächtnisbefehle erfordern Ihre ausdrückliche
   Bestätigung im Produkt, bevor irgendetwas gespeichert wird.
-- Freitext-Erfassung mit lokaler Prüfung: Natürliche Sätze können über ein lokales
-  Modell Gedächtniskandidaten vorschlagen und werden vor der Annahme deterministisch
-  erneut geprüft — bei null Abfluss Ihres Originaltexts.
+- Auch natürliche Sätze können zu Erinnerungen werden: Bevor irgendetwas gespeichert
+  wird, prüft das System es eigenständig und nimmt nur Inhalte an, die Ihrem
+  ursprünglichen Wortlaut entsprechen — bei null Abfluss Ihres Originaltexts.
+
+**Skills-Hub und Wissensbasis**
+
+- Serverseitiger Skills-Hub: ab dem Login verfügbar — eine wachsende Bibliothek von
+  fachlichen Fähigkeitskarten wird automatisch auf Ihre Frage geroutet, ganz ohne
+  manuelle Verdrahtung.
+- Persönliche Wissensbasis: Ihre hochgeladenen Dokumente werden zu einem kontoisolierten,
+  durchsuchbaren privaten Korpus, der bei Bedarf zur Antwortzeit herangezogen wird.
+- Persönliche Cloud-Gedächtnis-Erinnerung: über Sitzungen und Geräte hinweg, wobei nur
+  begrenzte, für die jeweilige Frage relevante Fragmente eingebunden werden.
 
 **Persönliches Cloud-Gedächtnis**
 

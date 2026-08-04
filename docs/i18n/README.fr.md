@@ -104,14 +104,25 @@ votre modèle répond comme à l'accoutumée et ses limitations habituelles s'ap
 - Des commandes de mémoire explicites à la sémantique exacte et auditable :
   enregistrer, mettre à jour, révoquer, localiser, et notes clé–valeur ouvertes ;
   ensembles multivalués ; rappel borné dans le temps.
-- Lignée de mémoire signée : chaque fait accepté porte une chaîne vérifiable
-  remontant au message d'origine ; les valeurs révoquées ne réapparaissent plus
-  dans aucune requête.
+- Chaque mémoire est auditable et remonte jusqu'à vos propres mots ; les valeurs
+  révoquées ne réapparaissent plus dans aucune requête.
 - Confirmation avant écriture : toute nouvelle commande de mémoire exige votre
   confirmation explicite dans le produit avant le moindre stockage.
-- Capture en langage libre avec vérification locale : des phrases naturelles peuvent
-  proposer des candidats mémoire via un modèle local, revérifiés de façon
-  déterministe avant acceptation — sans aucune sortie de votre texte original.
+- Des phrases naturelles peuvent elles aussi devenir des mémoires : avant tout
+  stockage, le système vérifie le contenu de façon indépendante et n'accepte que ce
+  qui correspond à votre formulation d'origine — sans aucune sortie de votre texte
+  original.
+
+**Hub de compétences et base de connaissances**
+
+- Hub de compétences côté serveur : disponible dès votre connexion — une
+  bibliothèque croissante de fiches de capacités par domaine est routée
+  automatiquement vers votre question, sans aucun câblage manuel.
+- Base de connaissances personnelle : les documents que vous téléversez deviennent
+  un corpus privé consultable, isolé par compte, rappelé à la demande au moment de
+  la réponse.
+- Rappel de la mémoire cloud personnelle : d'une session et d'un appareil à l'autre,
+  en n'injectant que des fragments bornés et pertinents pour la question posée.
 
 **Mémoire cloud personnelle**
 

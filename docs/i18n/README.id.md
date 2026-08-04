@@ -97,14 +97,25 @@ dan keterbatasan model yang normal tetap berlaku.
 - Perintah memori eksplisit dengan semantik yang persis dan dapat diaudit: mencatat,
   memperbarui, menarik kembali, melacak, dan catatan kunci–nilai terbuka; himpunan bernilai
   jamak; pengingatan kembali bercakupan waktu.
-- Silsilah memori bertanda tangan: setiap fakta yang diterima membawa rantai yang
-  dapat diverifikasi hingga ke pesan aslinya; nilai yang telah ditarik kembali tidak pernah
-  muncul lagi melalui kueri apa pun.
+- Setiap memori dapat diaudit dan ditelusuri kembali hingga ke kata-kata Anda
+  sendiri; nilai yang telah ditarik kembali tidak pernah muncul lagi melalui kueri
+  apa pun.
 - Konfirmasi sebelum menulis: perintah memori baru memerlukan konfirmasi eksplisit
   Anda di dalam produk sebelum apa pun disimpan.
-- Penangkapan bentuk bebas dengan verifikasi lokal: kalimat alami dapat mengajukan
-  kandidat memori melalui model lokal dan diverifikasi ulang secara deterministik
-  sebelum diterima — tanpa satu pun teks asli Anda keluar dari perangkat.
+- Kalimat alami juga bisa menjadi memori: sebelum apa pun disimpan, sistem
+  memeriksanya secara independen dan hanya menerima konten yang cocok dengan
+  kata-kata asli Anda — tanpa satu pun teks asli Anda keluar dari perangkat.
+
+**Hub keterampilan dan basis pengetahuan**
+
+- Hub keterampilan sisi server: tersedia begitu Anda masuk — pustaka kartu kemampuan
+  domain yang terus bertambah dirutekan ke pertanyaan Anda secara otomatis, tanpa
+  perlu menyambungkan apa pun secara manual.
+- Basis pengetahuan pribadi: dokumen yang Anda unggah menjadi korpus privat yang
+  dapat dicari dan terisolasi per akun, dipanggil kembali sesuai kebutuhan saat
+  jawaban disusun.
+- Pengingatan kembali memori awan pribadi: lintas sesi dan lintas perangkat, hanya
+  menyuntikkan fragmen relevan yang berbatas untuk pertanyaan yang sedang ditangani.
 
 **Memori awan pribadi**
 
